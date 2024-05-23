@@ -1,0 +1,75 @@
+﻿    @model Course
+    <form method="post" enctype="multipart/form-data">
+        <input asp-for="File" hidden/>
+        <div class="row">
+            <div class="col-10">
+                <div class="border pt-3 mt-5">
+                    <div class="row pb-3">
+                        <h2 class="text-dark">@(Model == null ? "Ekle" : "Güncelle")</h2>
+
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="CourseName" class="p-0">kurs adı:</label>
+                        <input asp-for="CourseName" class="form-control" />
+                        <span asp-validation-for="CourseName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="CourseCategoryId" class="p-0">kurs kateegori no:</label>
+                        <select asp-for="CourseCategoryId" asp-items="ViewBag.CourseCategoryList" class="form-select"></select>
+                        <span asp-validation-for="CourseName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Information" class="p-0">bilgi</label>
+                        <input asp-for="Information" class="form-control" />
+                        <span asp-validation-for="Information" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Owner" class="p-0">sahibi:</label>
+                        <input asp-for="Owner" class="form-control" />
+                        <span asp-validation-for="Owner" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Price" class="p-0">fiyat:</label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Time" class="p-0">süre:</label>
+                        <input asp-for="Time" class="form-control" />
+                        <span asp-validation-for="Time" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label asp-for="File" class="p-0">dosya</label>
+                        <input type="File" name="File" class="form-control" />
+
+                    </div>
+
+
+                    @if (Model != null)
+                    {
+                        <button type="submit" class="btn btn-lg btn-dark" style="width:200px;">güncelle</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-lg btn-dark" style="width:200px;">Ekle</button>
+
+                    }
+                    <a asp-controller="Course" asp-action="Index" class="btn btn-lg btn-dark" style="width:200px;">geri dön</a>
+                </div>
+            </div>
+            <div class="col-2">
+                @if (Model != null){
+                
+                            <img src="@Model.File" width="100%" style="border-radius:7px; border:1px solid #bbb9b9" />
+                }   
+            </div>
+        </div>
+   
+    </form>

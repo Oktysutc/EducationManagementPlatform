@@ -9,5 +9,7 @@ namespace EducationManagementPlatform.Utility
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
        
         public DbSet<CourseCategory>CourseCategories { get; set; }   
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Buy> Buys { get; set; }
     }
 }

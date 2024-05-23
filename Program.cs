@@ -1,3 +1,4 @@
+using EducationManagementPlatform.Models;
 using EducationManagementPlatform.Utility;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(Options =>
 Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<ICourseCategoryRepository, CourseCategoryRepository>();
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 
 var app = builder.Build();
 

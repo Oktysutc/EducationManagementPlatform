@@ -1,0 +1,49 @@
+﻿@model List<Course>
+
+<div class="container">
+    <div class="row pt-3 pb-5">
+        <h1> kurslar</h1>
+    </div>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+                <th>Id</th>
+                <th>CourseName</th>
+                <th>Information</th>
+                <th>Owner</th>
+                <th>Price</th>
+                <th>Time</th>
+                <th>CourseCategory</th>
+                <th>          </th>
+                <th>          </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var Course in Model){
+        <tr>
+                    <td>@Course.Id</td>
+                    <td>@Course.CourseName</td>
+                    <td>@Course.Information</td>
+                    <td>@Course.Owner</td>
+                    <td>@Course.Price</td>
+                    <td>@Course.Time</td>
+                    <td>@Course.CourseCategory.Name</td>
+                    <td>
+                        <a asp-controller="Course" asp-action="AddUpdate" asp-route-id="@Course.Id" type="button" class="btn btn-lg btn-dark" style="width:90px;">ekleguncelle</a>
+                    </td>
+                    <td>
+                        <a asp-controller="Course" asp-action="Delete" asp-route-id="@Course.Id" type="button" class="btn btn-lg btn-dark" style="width90px;">delete</a>
+                    </td>
+
+
+
+            </tr>
+        }
+    </tbody>
+    </table>
+    <div class="row pt-3 pb-2">
+        <div>
+            <a asp-controller="Course" asp-action="AddUpdate" class="btn btn-lg btn-primary" type="button">kurs ekle</a>
+        </div>
+    </div>
+</div>

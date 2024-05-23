@@ -1,1 +1,39 @@
-﻿<h1>kategori sayfası</h1>
+﻿@model List<CourseCategory>
+
+<div class="container">
+    <div class="row pt-3 pb-5">
+        <h1> kurs kategorileri</h1>
+    </div>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Course category</th>
+        <th>          </th>
+        <th>          </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var CourseCategory in Model){
+        <tr>
+            <td>@CourseCategory.Id</td>
+            <td>@CourseCategory.Name</td>
+                    <td>
+                        <a asp-controller="CourseCategory" asp-action="Update" asp-route-id="@CourseCategory.Id" type="button" class="btn btn-lg btn-dark" style="width:90px;">update</a>
+                    </td>
+                    <td>
+                        <a asp-controller="CourseCategory" asp-action="Delete" asp-route-id="@CourseCategory.Id" type="button" class="btn btn-lg btn-dark" style="width90px;">delete</a>
+                    </td>
+
+
+
+            </tr>
+        }
+    </tbody>
+    </table>
+    <div class="row pt-3 pb-2">
+        <div>
+            <a asp-controller="CourseCategory" asp-action="Add" class="btn btn-lg btn-primary" type="button">kurs kategorisi ekle</a>
+        </div>
+    </div>
+</div>

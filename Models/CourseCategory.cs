@@ -1,12 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace EducationManagementPlatform.Models
 {
-    public class CourseCategory
+    public class CourseCategory 
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage ="not null")]
+        [MaxLength(25)]
+        [DisplayName("kategori adı")]
         public string Name { get; set; }
     }
 }

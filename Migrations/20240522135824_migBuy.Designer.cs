@@ -3,6 +3,7 @@ using EducationManagementPlatform.Utility;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EducationManagementPlatform.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240522135824_migBuy")]
+    partial class migBuy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,6 +31,9 @@ namespace EducationManagementPlatform.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseCategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CourseName")
                         .IsRequired()
@@ -45,6 +51,8 @@ namespace EducationManagementPlatform.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CourseCategoryId");
 
                     b.ToTable("Buys");
                 });
@@ -105,6 +113,17 @@ namespace EducationManagementPlatform.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CourseCategories");
+                });
+
+            modelBuilder.Entity("EducationManagementPlatform.Models.Buy", b =>
+                {
+                    b.HasOne("EducationManagementPlatform.Models.CourseCategory", "CourseCategory")
+                        .WithMany()
+                        .HasForeignKey("CourseCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CourseCategory");
                 });
 
             modelBuilder.Entity("EducationManagementPlatform.Models.Course", b =>

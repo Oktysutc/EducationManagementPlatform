@@ -1,0 +1,16 @@
+﻿@model CourseCategory
+<form method="post">
+    <input asp-for="Id" hidden/>
+    <div class="border pt-3 mt-5">
+        <div class="row pb-3">
+            <h2 class="text-dark">kategori sil</h2>
+
+        </div>
+        <div class="mb-3">
+            <label asp-for="Name" class="p-0">kategori adı:</label>
+            <input asp-for="Name" disabled class="form-control"/>
+        </div>
+        <button type="submit" class="btn btn-lg btn-dark" style="width:200px;">sil</button>
+        <a asp-controller="CourseCategory" asp-action="Index" class="btn btn-lg btn-dark" style="width:200px;">geri dön</a>
+    </div>
+</form>
