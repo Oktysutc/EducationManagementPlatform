@@ -1,41 +1,40 @@
 ﻿@model Course
 <form method="post">
-    <input asp-for="Id" hidden/>
+    <input asp-for="Id" hidden />
     <div class="border pt-3 mt-5">
         <div class="row pb-3">
             <h2 class="text-dark">kategori sil</h2>
-
         </div>
-       
+
 
         <div class="mb-3">
             <label asp-for="CourseName" class="p-0">kategori adı:</label>
             <input asp-for="CourseName" disabled class="form-control" />
-            
+
         </div>
 
         <div class="mb-3">
             <label asp-for="Information" class="p-0">bilgi:</label>
             <input asp-for="Information" disabled class="form-control" />
-            
+
         </div>
 
         <div class="mb-3">
             <label asp-for="Owner" class="p-0">sahibi:</label>
-            <input asp-for="Owner"disabled class="form-control" />
-            
+            <input asp-for="Owner" disabled class="form-control" />
+
         </div>
 
         <div class="mb-3">
-            <label asp-for="Price" class="p-0">sahibi:</label>
-            <input asp-for="Price"disabled class="form-control" />
-            
+            <label asp-for="Price" class="p-0">ücret</label>
+            <input asp-for="Price" disabled class="form-control" />
+
         </div>
 
         <div class="mb-3">
             <label asp-for="Time" class="p-0">süre:</label>
             <input asp-for="Time" disabled class="form-control" />
-            
+
         </div>
         <button type="submit" class="btn btn-lg btn-dark" style="width:200px;">sil</button>
         <a asp-controller="Course" asp-action="Index" class="btn btn-lg btn-dark" style="width:200px;">geri dön</a>

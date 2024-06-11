@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EducationManagementPlatform.Models
 {
-    public class CourseCategory 
+    public class CourseCategory //kurs ların kategori sınıfı burada oluşturuldu
     {
         [Key]
         public int Id { get; set; }

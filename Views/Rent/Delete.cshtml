@@ -1,0 +1,24 @@
+﻿@model Rent
+<form method="post">
+    <input asp-for="Id" hidden />
+    <div class="border pt-3 mt-5">
+        <div class="row pb-3">
+            <h2 class="text-dark">Kiralama iptal et</h2>
+
+        </div>
+
+
+        <div class="mb-3">
+            <label asp-for="StudentId" class="p-0">öğrenci no:</label>
+            <input asp-for="StudentId" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="CourseId" class="p-0">kurs no:</label>
+            <select asp-for="CourseId" asp-items="ViewBag.CourseList" class="form-select"></select>
+        </div>
+        
+        <button type="submit" class="btn btn-lg btn-dark" style="width:200px;">kiralama işlemi iptal</button>
+        <a asp-controller="Rent" asp-action="Index" class="btn btn-lg btn-dark" style="width:200px;">geri dön dön</a>
+    </div>
+</form>

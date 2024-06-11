@@ -1,19 +1,21 @@
 ﻿using EducationManagementPlatform.Models;
 using EducationManagementPlatform.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EducationManagementPlatform.Controllers
 {
+    [Authorize(Roles=UserRoles.Role_Admin)]
     public class CourseController : Controller
     {    
-        private readonly ICourseRepository _courseRepository;
+        private readonly ICourseRepository _courseRepository;//dependency injection kullanıldı
         private readonly ICourseCategoryRepository _courseCategoryRepository;
         public readonly IWebHostEnvironment _webHostEnvironment;
 
         public CourseController(ICourseRepository courseRepository, ICourseCategoryRepository courseCategoryRepository, IWebHostEnvironment webHostEnvironment)
         {
-            _courseRepository = courseRepository;
+            _courseRepository = courseRepository;//buarada enjecte edildi
             _courseCategoryRepository = courseCategoryRepository;
             _webHostEnvironment = webHostEnvironment;
         }
@@ -21,27 +23,29 @@ namespace EducationManagementPlatform.Controllers
         public IActionResult Index()
         {
             // List<Course> objCourseList = _courseRepository.GetAll().ToList();
-            List<Course> objCourseList = _courseRepository.GetAll(includeProps:"CourseCategory").ToList();
+            List<Course> objCourseList = _courseRepository.GetAll(includeProps:"CourseCategory").ToList();//liste burada döndürüldü
 
 
-            return View(objCourseList);
+            return View(objCourseList);//listeyi döndür
         }
         public IActionResult AddUpdate(int? id)
         {
-            IEnumerable<SelectListItem> CourseCategoryList = _courseCategoryRepository.GetAll().
-                Select(k => new SelectListItem
+            IEnumerable<SelectListItem> CourseCategoryList = _courseCategoryRepository.GetAll()
+                .Select(k => new SelectListItem
                 {
                     Text = k.Name,
                     Value = k.Id.ToString()
                 });
             ViewBag.CourseCategoryList = CourseCategoryList;
+
             if (id == null || id == 0)
-            {//ekleme
-                return View();
+            {
+                // Ekleme
+                return View(new Course());
             }
             else
             {
-                //guncelleme
+                // Güncelleme
                 Course? courseVt = _courseRepository.Get(u => u.Id == id);
                 if (courseVt == null)
                 {
@@ -50,21 +54,26 @@ namespace EducationManagementPlatform.Controllers
                 return View(courseVt);
             }
         }
+
         [HttpPost]
-        public IActionResult AddUpdate(Course course,IFormFile? File)
+        public IActionResult AddUpdate(Course course, IFormFile? File)
         {
             if (ModelState.IsValid)
             {
-               
+                string wwwrootPath = _webHostEnvironment.WebRootPath;
+                string coursePath = Path.Combine(wwwrootPath, "img");
 
-                string wwwrootpath = _webHostEnvironment.WebRootPath;
-                string coursePath = Path.Combine(wwwrootpath, @"img");
-                if (File != null) {
-                using (var fileStream = new FileStream(Path.Combine(coursePath, File.FileName),FileMode.Create))
+                if (File != null)
                 {
-                    File.CopyTo(fileStream);
+                    string fileName = Path.GetFileName(File.FileName);
+                    string fullPath = Path.Combine(coursePath, fileName);
+
+                    using (var fileStream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        File.CopyTo(fileStream);
+                    }
+                    course.File = $"/img/{fileName}"; // Doğru URL formatı için
                 }
-                course.File = @"\img" + File.FileName; }
 
                 if (course.Id == 0)
                 {
@@ -74,16 +83,23 @@ namespace EducationManagementPlatform.Controllers
                 {
                     _courseRepository.Update(course);
                     TempData["basarili"] = "okey";
-                   
                 }
 
-            // _courseRepository.Add(course);
-             _courseRepository.Save();
-               
-            return RedirectToAction("Index","Course"); 
+                _courseRepository.Save();
+                return RedirectToAction("Index", "Course");
             }
-            return View();
+
+            // ViewBag.CourseCategoryList'i tekrar doldur
+            ViewBag.CourseCategoryList = _courseCategoryRepository.GetAll()
+                .Select(k => new SelectListItem
+                {
+                    Text = k.Name,
+                    Value = k.Id.ToString()
+                });
+
+            return View(course);
         }
+
 
 
 

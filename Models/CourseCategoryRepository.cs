@@ -9,7 +9,7 @@ namespace EducationManagementPlatform.Models
         {
             _applicationDbContext = applicationDbContext;
         }
-
+        //repository design pattern burada kullanıldı
         public void Save()
         {
             _applicationDbContext.SaveChanges();

@@ -4,16 +4,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EducationManagementPlatform.Models
 {
-    public class Course
+    public class Course//course modeli burada oluşturuldu
     {
         [Key]//pk
         public int Id { get; set; }
         [Required]
-        public string CourseName { get; set; }
+        public string? CourseName { get; set; }
        // [Required]
         public string Information { get; set; }
         [Required]
-        public string Owner {  get; set; }
+        public string? Owner {  get; set; }
         [Required]
         [Range(10,5000)]
         public double Price { get; set; }
@@ -23,9 +23,9 @@ namespace EducationManagementPlatform.Models
         public int CourseCategoryId { get; set; }
         [ForeignKey("CourseCategoryId")]
         [ValidateNever]
-        public CourseCategory CourseCategory { get; set; }
+        public CourseCategory ?CourseCategory { get; set; }
         [ValidateNever]
-        public string File { get;set; }
+        public string? File { get;set; }
 
     }
 }

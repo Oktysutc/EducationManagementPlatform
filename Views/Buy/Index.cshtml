@@ -1,0 +1,45 @@
+﻿@model List<Buy>
+
+<div class="container">
+    <div class="row pt-3 pb-5">
+        <h1> alışveriş</h1>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>kullanıcı no</th>
+                <th>kurs no</th>
+                <th>kurs</th>
+                <th>satış ücreti</th>
+                
+                <th>          </th>
+                <th>          </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Buy in Model)
+            {
+                <tr>
+                    <td>@Buy.Id</td>
+                    <td>@Buy.StudentId</td>
+                    <td>@Buy.CourseId</td>
+                    <td>@Buy.Course</td>
+                    <td>@Buy.SalesPrice</td>
+                    
+                    <td>
+                        <a asp-controller="Buy" asp-action="AddUpdate" asp-route-id="@Buy.Id" type="button" class="btn btn-lg btn-dark" style="width:90px;">güncelle</a>
+                    </td>
+                    <td>
+                        <a asp-controller="Buy" asp-action="Delete" asp-route-id="@Buy.Id" type="button" class="btn btn-lg btn-dark" style="width90px;">sil</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="row pt-3 pb-2">
+        <div>
+            <a asp-controller="Buy" asp-action="AddUpdate" class="btn btn-lg btn-primary" type="button">sepete ekle</a>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using EducationManagementPlatform.Utility
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,9 +9,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EducationManagementPlatform.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU7K3t8UrFwiGBjMRp7Jni0n50Xr2eQvWf1" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -20,19 +23,43 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Anasayfa</a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">bilgi</a>
                         </li>
+                        @if(User.IsInRole(UserRoles.Role_Admin))
+                        {
+                       
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="CourseCategory" asp-action="Index">kategoriler</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Course" asp-action="Index">kurslar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Buy" asp-action="Index">alışveriş</a>
+                            </li>
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="CourseCategory" asp-action="Index">kategoriler</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Rent" asp-action="Index">kiralama</a>
                         </li>
+
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Course" asp-action="Index">kurslar</a>
-                        </li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">İletişim</a>
+                            </li>
+                        }
+                       
                     </ul>
+
+
+                    <partial name="_LoginPartial" />
+
+
                 </div>
             </div>
         </nav>
@@ -45,14 +72,19 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - EducationManagementPlatform - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">Eğitim yönetim platformu</a>
         </div>
     </footer>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4Ag2WIC9IYvfV5gsJN8tz60Of2kBzUj9mc1C0+4kRtGfeZTlG00d" crossorigin="anonymous"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,20 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace EducationManagementPlatform.Models
 {
-    public class Buy
+    public class Buy//satın alma sayfasının modeli
     {
         [Key]//pk
         public int Id { get; set; }
         [Required]
-        public string CourseName { get; set; }
+        public string StudentId { get; set; }
         // [Required]
-        public string Info { get; set; }
-        [Required]
-        public string Point { get; set; }
-        [Required]
-        [Range(10, 5000)]
-        public double SalesPrice { get; set; }
-        }
-}
+        [ValidateNever]
+        public int CourseId { get; set; }
+        [ForeignKey("CourseId")]
+        [ValidateNever]
+        public Course Course { get; set; }
+        public int SalesPrice { get; set; }
+    }
+       }

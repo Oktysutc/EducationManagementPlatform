@@ -51,13 +51,11 @@ namespace EducationManagementPlatform.Models
         }
 
 
+
+
         public void DeleteRange(IEnumerable<T> entities)
         {
             dbSet.RemoveRange(entities);
         }
-
-       
-
-       
-    }
+ }
 }

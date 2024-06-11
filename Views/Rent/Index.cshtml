@@ -1,0 +1,50 @@
+﻿@model List<Rent>
+
+<div class="container">
+    <div class="row pt-3 pb-5">
+    <h1>kiralamalar</h1>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>StudentId</th>
+                <th>CourseId</th>
+                <th>Course</th>
+                <th>RentPrice</th>
+                <th>RentName</th>
+                
+                <th>          </th>
+                <th>          </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Rent in Model)
+            {
+                <tr>
+                    <td>@Rent.Id</td>
+                    <td>@Rent.StudentId</td>
+                    <td>@Rent.CourseId</td>
+                    <td>@Rent.Course</td>
+                    <td>@Rent.RentPrice</td>
+                    <td>@Rent.RentName</td>
+                    
+                    <td>
+                        <a asp-controller="Rent" asp-action="AddUpdate" asp-route-id="@Rent.Id" type="button" class="btn btn-lg btn-dark" style="width:90px;">guncelle</a>
+                    </td>
+                    <td>
+                        <a asp-controller="Rent" asp-action="Delete" asp-route-id="@Rent.Id" type="button" class="btn btn-lg btn-dark" style="width90px;">sil</a>
+                    </td>
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="row pt-3 pb-2">
+        <div>
+            <a asp-controller="Buy" asp-action="AddUpdate" class="btn btn-lg btn-primary" type="button">sepete ekle</a>
+        </div>
+    </div>
+</div>

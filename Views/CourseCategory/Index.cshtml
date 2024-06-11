@@ -19,10 +19,10 @@
             <td>@CourseCategory.Id</td>
             <td>@CourseCategory.Name</td>
                     <td>
-                        <a asp-controller="CourseCategory" asp-action="Update" asp-route-id="@CourseCategory.Id" type="button" class="btn btn-lg btn-dark" style="width:90px;">update</a>
+                        <a asp-controller="CourseCategory" asp-action="Update" asp-route-id="@CourseCategory.Id" type="button" class="btn btn-lg btn-dark" style="width:90px;">güncelle</a>
                     </td>
                     <td>
-                        <a asp-controller="CourseCategory" asp-action="Delete" asp-route-id="@CourseCategory.Id" type="button" class="btn btn-lg btn-dark" style="width90px;">delete</a>
+                        <a asp-controller="CourseCategory" asp-action="Delete" asp-route-id="@CourseCategory.Id" type="button" class="btn btn-lg btn-dark" style="width90px;">sil</a>
                     </td>
 
 
@@ -34,6 +34,7 @@
     <div class="row pt-3 pb-2">
         <div>
             <a asp-controller="CourseCategory" asp-action="Add" class="btn btn-lg btn-primary" type="button">kurs kategorisi ekle</a>
+
         </div>
     </div>
 </div>
