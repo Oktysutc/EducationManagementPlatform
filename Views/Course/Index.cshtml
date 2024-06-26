@@ -2,38 +2,38 @@
 
 <div class="container">
     <div class="row pt-3 pb-5">
-        <h1>kurslar</h1>
+        <h1>Kurslar</h1>
     </div>
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>kurs adı</th>
-                <th>bilgi</th>
-                <th>sahibi</th>
-                <th>ücret</th>
-                <th>zaman</th>
-                <th>türü</th>
-                <th>          </th>
-                <th>          </th>
+                <th>Kurs Adı</th>
+                <th>Bilgi</th>
+                <th>Sahibi</th>
+                <th>Ücret</th>
+                <th>Zaman</th>
+                <th>Türü</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var Course in Model)
+            @foreach (var course in Model)
             {
                 <tr>
-                    <td>@Course.Id</td>
-                    <td>@Course.CourseName</td>
-                    <td>@Course.Information</td>
-                    <td>@Course.Owner</td>
-                    <td>@Course.Price</td>
-                    <td>@Course.Time</td>
-                    <td>@Course.CourseCategory.Name</td>
+                    <td>@course.Id</td>
+                    <td>@course.CourseName</td>
+                    <td>@course.Information</td>
+                    <td>@course.Owner</td>
+                    <td>@course.Price</td>
+                    <td>@course.Time</td>
+                    <td>@course.CourseCategory.Name</td>
                     <td>
-                        <a asp-controller="Course" asp-action="AddUpdate" asp-route-id="@Course.Id" type="button" class="btn btn-lg btn-dark" style="width:90px;">güncelle</a>
+                        <button class="btn btn-lg btn-dark" style="width:90px;" onclick="openUpdateModal('@course.Id')">Güncelle</button>
                     </td>
                     <td>
-                        <a asp-controller="Course" asp-action="Delete" asp-route-id="@Course.Id" type="button" class="btn btn-lg btn-dark" style="width90px;">sil</a>
+                        <button class="btn btn-lg btn-dark" style="width:90px;" onclick="openDeleteModal('@course.Id')">Sil</button>
                     </td>
                 </tr>
             }
@@ -41,7 +41,217 @@
     </table>
     <div class="row pt-3 pb-2">
         <div>
-            <a asp-controller="Course" asp-action="AddUpdate" class="btn btn-lg btn-primary" type="button">ekle</a>
+            <button class="btn btn-lg btn-primary" onclick="openAddModal()">Ekle</button>
         </div>
     </div>
 </div>
+
+<!-- Add Modal -->
+<div id="addModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kurs Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="addCourseName">Kurs Adı</label>
+                        <input type="text" class="form-control" id="addCourseName" name="CourseName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addCourseCategoryId">Kategori</label>
+                        <select class="form-control" id="addCourseCategoryId" name="CourseCategoryId" required>
+                            @foreach (var category in ViewBag.CourseCategoryList)
+                            {
+                                <option value="@category.Value">@category.Text</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="addInformation">Bilgi</label>
+                        <textarea class="form-control" id="addInformation" name="Information" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="addOwner">Sahibi</label>
+                        <input type="text" class="form-control" id="addOwner" name="Owner" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addPrice">Ücret</label>
+                        <input type="number" class="form-control" id="addPrice" name="Price" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addTime">Zaman</label>
+                        <input type="number" class="form-control" id="addTime" name="Time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addFile">Resim</label>
+                        <input type="file" class="form-control" id="addFile" name="File" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update Modal -->
+<div id="updateModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kurs Güncelle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="updateForm" enctype="multipart/form-data">
+                    <input type="hidden" id="updateId" name="Id">
+                    <div class="form-group">
+                        <label for="updateCourseName">Kurs Adı</label>
+                        <input type="text" class="form-control" id="updateCourseName" name="CourseName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateCourseCategoryId">Kategori</label>
+                        <select class="form-control" id="updateCourseCategoryId" name="CourseCategoryId" required>
+                            @foreach (var category in ViewBag.CourseCategoryList)
+                            {
+                                <option value="@category.Value">@category.Text</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateInformation">Bilgi</label>
+                        <textarea class="form-control" id="updateInformation" name="Information" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateOwner">Sahibi</label>
+                        <input type="text" class="form-control" id="updateOwner" name="Owner" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updatePrice">Ücret</label>
+                        <input type="number" class="form-control" id="updatePrice" name="Price" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateTime">Zaman</label>
+                        <input type="number" class="form-control" id="updateTime" name="Time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateFile">Resim</label>
+                        <input type="file" class="form-control" id="updateFile" name="File">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Güncelle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kurs Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bu kursu silmek istediğinizden emin misiniz?</p>
+                <button type="button" class="btn btn-danger" onclick="deleteCourse()">Sil</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openAddModal() {
+            $('#addModal').modal('show');
+        }
+
+        function openUpdateModal(id) {
+            $.ajax({
+                url: '@Url.Action("Get", "Course")',
+                type: 'GET',
+                data: { id: id },
+                success: function (data) {
+                    $('#updateId').val(data.id);
+                    $('#updateCourseName').val(data.courseName);
+                    $('#updateCourseCategoryId').val(data.courseCategoryId);
+                    $('#updateInformation').val(data.information);
+                    $('#updateOwner').val(data.owner);
+                    $('#updatePrice').val(data.price);
+                    $('#updateTime').val(data.time);
+                    $('#updateModal').modal('show');
+                }
+            });
+        }
+
+        function openDeleteModal(id) {
+            $('#deleteModal').modal('show');
+            window.courseToDelete = id;
+        }
+
+        function deleteCourse() {
+            $.ajax({
+                url: '@Url.Action("Delete", "Course")',
+                type: 'POST',
+                data: { id: window.courseToDelete },
+                success: function (data) {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert('Kurs silinemedi.');
+                    }
+                }
+            });
+        }
+
+        $('#addForm').submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: '@Url.Action("AddUpdate", "Course")',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.success) {
+                        $('#addModal').modal('hide');
+                        location.reload();
+                    } else {
+                        alert('Kurs eklenemedi.');
+                    }
+                }
+            });
+        });
+
+        $('#updateForm').submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: '@Url.Action("AddUpdate", "Course")',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.success) {
+                        $('#updateModal').modal('hide');
+                        location.reload();
+                    } else {
+                        alert('Kurs güncellenemedi.');
+                    }
+                }
+            });
+        });
+    </script>
+}

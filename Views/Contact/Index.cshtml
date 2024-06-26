@@ -1,0 +1,30 @@
+﻿@model EducationManagementPlatform.Models.ContactFormModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link rel="stylesheet" href="~/css/contact.css" />
+</head>
+<body>
+    <div class="contact-form-container">
+        <form asp-action="Send" method="post">
+            <div class="form-group">
+                <label for="name">adınız</label>
+                <input type="text" id="name" name="Name" required />
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="Email" required />
+            </div>
+            <div class="form-group">
+                <label for="message">mesajınız</label>
+                <textarea id="message" name="Message" required></textarea>
+            </div>
+            <button type="submit">e-posta gönder</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using EducationManagementPlatform.Models;
 
 namespace EducationManagementPlatform.Areas.Identity.Pages.Account.Manage
 {
@@ -57,19 +58,30 @@ namespace EducationManagementPlatform.Areas.Identity.Pages.Account.Manage
             /// </summary>
             [Phone]
             [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
+            public string PhoneNumber { get; set; } 
+            public string Faculty { get; set; }
+            public string Episode { get; set; }
         }
 
         private async Task LoadAsync(IdentityUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var accessFailedCont = await _userManager.GetAccessFailedCountAsync(user);
 
             Username = userName;
+       
 
+            
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber
+                
+            };
+            Input = new InputModel
+            {
+                PhoneNumber = phoneNumber
+
             };
         }
 

@@ -2,36 +2,34 @@
 
 <div class="container">
     <div class="row pt-3 pb-5">
-        <h1> alışveriş</h1>
+        <h1>Alışveriş</h1>
     </div>
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>kullanıcı no</th>
-                <th>kurs no</th>
-                <th>kurs</th>
-                <th>satış ücreti</th>
-                
-                <th>          </th>
-                <th>          </th>
+                <th>Kullanıcı No</th>
+                <th>Kurs No</th>
+                <th>Kurs</th>
+                <th>Satış Ücreti</th>
+                <th>Güncelle</th>
+                <th>Sil</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var Buy in Model)
+            @foreach (var buy in Model)
             {
                 <tr>
-                    <td>@Buy.Id</td>
-                    <td>@Buy.StudentId</td>
-                    <td>@Buy.CourseId</td>
-                    <td>@Buy.Course</td>
-                    <td>@Buy.SalesPrice</td>
-                    
+                    <td>@buy.Id</td>
+                    <td>@buy.StudentId</td>
+                    <td>@buy.CourseId</td>
+                    <td>@buy.Course.CourseName</td>
+                    <td>@buy.SalesPrice</td>
                     <td>
-                        <a asp-controller="Buy" asp-action="AddUpdate" asp-route-id="@Buy.Id" type="button" class="btn btn-lg btn-dark" style="width:90px;">güncelle</a>
+                        <button class="btn btn-lg btn-dark" style="width:90px;" onclick="openUpdateModal('@buy.Id')">Güncelle</button>
                     </td>
                     <td>
-                        <a asp-controller="Buy" asp-action="Delete" asp-route-id="@Buy.Id" type="button" class="btn btn-lg btn-dark" style="width90px;">sil</a>
+                        <button class="btn btn-lg btn-dark" style="width:90px;" onclick="openDeleteModal('@buy.Id')">Sil</button>
                     </td>
                 </tr>
             }
@@ -39,7 +37,149 @@
     </table>
     <div class="row pt-3 pb-2">
         <div>
-            <a asp-controller="Buy" asp-action="AddUpdate" class="btn btn-lg btn-primary" type="button">sepete ekle</a>
+            <button class="btn btn-lg btn-primary" onclick="openAddModal()">Sepete Ekle</button>
         </div>
     </div>
 </div>
+
+<!-- Add Modal -->
+<div id="addModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Satın Alma Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addForm">
+                    <div class="form-group">
+                        <label for="CourseId">Kurs</label>
+                        <select class="form-control" id="addCourseId" name="CourseId" required>
+                            @foreach (var course in ViewBag.CourseList)
+                            {
+                                <option value="@course.Value">@course.Text</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="StudentId">Kullanıcı No</label>
+                        <input type="number" class="form-control" id="addStudentId" name="StudentId" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="SalesPrice">Satış Ücreti</label>
+                        <input type="number" class="form-control" id="addSalesPrice" name="SalesPrice" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update Modal -->
+<div id="updateModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Satın Alma Güncelle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="updateForm">
+                    <input type="hidden" id="updateId" name="Id">
+                    <div class="form-group">
+                        <label for="CourseId">Kurs</label>
+                        <select class="form-control" id="updateCourseId" name="CourseId" required>
+                            @foreach (var course in ViewBag.CourseList)
+                            {
+                                <option value="@course.Value">@course.Text</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="StudentId">Kullanıcı No</label>
+                        <input type="number" class="form-control" id="updateStudentId" name="StudentId" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="SalesPrice">Satış Ücreti</label>
+                        <input type="number" class="form-control" id="updateSalesPrice" name="SalesPrice" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Güncelle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Satın Alma Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bu satın almayı silmek istediğinizden emin misiniz?</p>
+                <form id="deleteForm">
+                    <input type="hidden" id="deleteId" name="Id">
+                    <button type="submit" class="btn btn-danger">Sil</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openAddModal() {
+            $('#addModal').modal('show');
+        }
+
+        function openUpdateModal(id) {
+            $.get('/Buy/Get/' + id, function (data) {
+                $('#updateId').val(data.id);
+                $('#updateCourseId').val(data.courseId);
+                $('#updateStudentId').val(data.studentId);
+                $('#updateSalesPrice').val(data.salesPrice);
+                $('#updateModal').modal('show');
+            });
+        }
+
+        function openDeleteModal(id) {
+            $('#deleteId').val(id);
+            $('#deleteModal').modal('show');
+        }
+
+        $('#addForm').submit(function (e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            $.post('/Buy/AddUpdate', formData, function (data) {
+                location.reload();
+            });
+        });
+
+        $('#updateForm').submit(function (e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            $.post('/Buy/AddUpdate', formData, function (data) {
+                location.reload();
+            });
+        });
+
+        $('#deleteForm').submit(function (e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            $.post('/Buy/Delete', formData, function (data) {
+                location.reload();
+            });
+        });
+    </script>
+}

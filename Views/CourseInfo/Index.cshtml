@@ -1,0 +1,40 @@
+﻿@model List<CourseInfo>
+
+<div class="container">
+    <div class="row pt-3 pb-5">
+        <h1>Kurslar</h1>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>resim</th>
+                <th>Id</th>
+                <th>Kurs Adı</th>
+                <th>Bilgi</th>
+                <th>Sahibi</th>
+                <th>Ücret</th>
+                <th>Zaman</th>
+                <th>Türü</th>
+
+                <th>resim</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in Model)
+            {
+                <tr>
+                    <td>@course.Id</td>
+                    <td>@course.CourseName</td>
+                    <td>@course.Information</td>
+                    <td>@course.Owner</td>
+                    <td>@course.Price</td>
+                    <td>@course.Time</td>
+                  
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+   
+</div>

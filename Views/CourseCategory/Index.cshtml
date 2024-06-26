@@ -2,39 +2,147 @@
 
 <div class="container">
     <div class="row pt-3 pb-5">
-        <h1> kurs kategorileri</h1>
+        <h1>Kurs Kategorileri</h1>
     </div>
-<table class="table table-bordered">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Course category</th>
-        <th>          </th>
-        <th>          </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var CourseCategory in Model){
-        <tr>
-            <td>@CourseCategory.Id</td>
-            <td>@CourseCategory.Name</td>
-                    <td>
-                        <a asp-controller="CourseCategory" asp-action="Update" asp-route-id="@CourseCategory.Id" type="button" class="btn btn-lg btn-dark" style="width:90px;">güncelle</a>
-                    </td>
-                    <td>
-                        <a asp-controller="CourseCategory" asp-action="Delete" asp-route-id="@CourseCategory.Id" type="button" class="btn btn-lg btn-dark" style="width90px;">sil</a>
-                    </td>
-
-
-
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Kategori Adı</th>
+                <th>İşlemler</th>
             </tr>
-        }
-    </tbody>
+        </thead>
+        <tbody>
+            @foreach (var courseCategory in Model)
+            {
+                <tr>
+                    <td>@courseCategory.Id</td>
+                    <td>@courseCategory.Name</td>
+                    <td>
+                        <button class="btn btn-lg btn-dark" style="width:90px;" onclick="openUpdateModal('@courseCategory.Id')">Güncelle</button>
+                        <button class="btn btn-lg btn-dark" style="width:90px;" onclick="openDeleteModal('@courseCategory.Id')">Sil</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
     <div class="row pt-3 pb-2">
         <div>
-            <a asp-controller="CourseCategory" asp-action="Add" class="btn btn-lg btn-primary" type="button">kurs kategorisi ekle</a>
-
+            <button class="btn btn-lg btn-primary" onclick="openAddModal()">Kurs Kategorisi Ekle</button>
         </div>
     </div>
 </div>
+
+<!-- Add Modal -->
+<div id="addModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kategori Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addForm">
+                    <div class="form-group">
+                        <label for="Name">Kategori Adı</label>
+                        <input type="text" class="form-control" id="addName" name="Name" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update Modal -->
+<div id="updateModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kategori Güncelle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="updateForm">
+                    <input type="hidden" id="updateId" name="Id">
+                    <div class="form-group">
+                        <label for="Name">Kategori Adı</label>
+                        <input type="text" class="form-control" id="updateName" name="Name" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Güncelle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kategori Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bu kategoriyi silmek istediğinizden emin misiniz?</p>
+                <form id="deleteForm">
+                    <input type="hidden" id="deleteId" name="Id">
+                    <button type="submit" class="btn btn-danger">Sil</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openAddModal() {
+            $('#addModal').modal('show');
+        }
+
+        function openUpdateModal(id) {
+            $.get('/CourseCategory/Get/' + id, function (data) {
+                $('#updateId').val(data.id);
+                $('#updateName').val(data.name);
+                $('#updateModal').modal('show');
+            });
+        }
+
+        function openDeleteModal(id) {
+            $('#deleteId').val(id);
+            $('#deleteModal').modal('show');
+        }
+
+        $('#addForm').submit(function (e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            $.post('/CourseCategory/Add', formData, function (data) {
+                location.reload();
+            });
+        });
+
+        $('#updateForm').submit(function (e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            $.post('/CourseCategory/Update', formData, function (data) {
+                location.reload();
+            });
+        });
+
+        $('#deleteForm').submit(function (e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            $.post('/CourseCategory/Delete', formData, function (data) {
+                location.reload();
+            });
+        });
+    </script>
+}

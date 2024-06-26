@@ -1,35 +1,26 @@
 ﻿using EducationManagementPlatform.Models;
 using EducationManagementPlatform.Utility;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EducationManagementPlatform.Controllers
 {
-    [Authorize(Roles=UserRoles.Role_Admin)]
     public class CourseController : Controller
-    {    
-        private readonly ICourseRepository _courseRepository;//dependency injection kullanıldı
+    {
+        private readonly ICourseRepository _courseRepository;
         private readonly ICourseCategoryRepository _courseCategoryRepository;
         public readonly IWebHostEnvironment _webHostEnvironment;
 
         public CourseController(ICourseRepository courseRepository, ICourseCategoryRepository courseCategoryRepository, IWebHostEnvironment webHostEnvironment)
         {
-            _courseRepository = courseRepository;//buarada enjecte edildi
+            _courseRepository = courseRepository;
             _courseCategoryRepository = courseCategoryRepository;
             _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
         {
-            // List<Course> objCourseList = _courseRepository.GetAll().ToList();
-            List<Course> objCourseList = _courseRepository.GetAll(includeProps:"CourseCategory").ToList();//liste burada döndürüldü
-
-
-            return View(objCourseList);//listeyi döndür
-        }
-        public IActionResult AddUpdate(int? id)
-        {
+            List<Course> objCourseList = _courseRepository.GetAll(includeProps: "CourseCategory").ToList();
             IEnumerable<SelectListItem> CourseCategoryList = _courseCategoryRepository.GetAll()
                 .Select(k => new SelectListItem
                 {
@@ -37,22 +28,27 @@ namespace EducationManagementPlatform.Controllers
                     Value = k.Id.ToString()
                 });
             ViewBag.CourseCategoryList = CourseCategoryList;
+            return View(objCourseList);
+        }
 
-            if (id == null || id == 0)
+        [HttpGet]
+        public IActionResult Get(int id)
+        {
+            var course = _courseRepository.Get(c => c.Id == id);
+            if (course == null)
             {
-                // Ekleme
-                return View(new Course());
+                return NotFound();
             }
-            else
+            return Json(new
             {
-                // Güncelleme
-                Course? courseVt = _courseRepository.Get(u => u.Id == id);
-                if (courseVt == null)
-                {
-                    return NotFound();
-                }
-                return View(courseVt);
-            }
+                id = course.Id,
+                courseName = course.CourseName,
+                courseCategoryId = course.CourseCategoryId,
+              //  description = course.Description,
+                price = course.Price,
+               // duration = course.Duration,
+                file = course.File
+            });
         }
 
         [HttpPost]
@@ -72,7 +68,7 @@ namespace EducationManagementPlatform.Controllers
                     {
                         File.CopyTo(fileStream);
                     }
-                    course.File = $"/img/{fileName}"; // Doğru URL formatı için
+                    course.File = $"/img/{fileName}";
                 }
 
                 if (course.Id == 0)
@@ -86,81 +82,29 @@ namespace EducationManagementPlatform.Controllers
                 }
 
                 _courseRepository.Save();
-                return RedirectToAction("Index", "Course");
+                return Json(new { success = true });
+
+               
+                
             }
 
-            // ViewBag.CourseCategoryList'i tekrar doldur
-            ViewBag.CourseCategoryList = _courseCategoryRepository.GetAll()
-                .Select(k => new SelectListItem
-                {
-                    Text = k.Name,
-                    Value = k.Id.ToString()
-                });
-
-            return View(course);
+            return Json(new { success = false, message = "Model state is not valid." });
         }
 
-
-
-
-
-        /*
-
-        public IActionResult Update(int? id)
-        {
-            if(id==0||id==null)
-            {
-                return NotFound();
-            }
-            Course? courseVt = _courseRepository.Get(u=>u.Id==id);
-            if (courseVt==null) {
-                return NotFound();
-            }
-            return View(courseVt);
-        }
-       
         [HttpPost]
-        public IActionResult Update(Course course)
+        public IActionResult Delete(int id)
         {
-            if (ModelState.IsValid)
-            {
-                _courseRepository.Update(course);
-                _courseRepository.Save();
-                TempData["okey"] = "okey";
-
-                return RedirectToAction("Index", "Course");
-            }
-            return View();
-        }
-        */
-
-        public IActionResult Delete(int? id)
-        {
-            if (id == 0 || id == null)
-            {
-                return NotFound();
-            }
-            Course? courseVt = _courseRepository.Get(u => u.Id == id);
-            if (courseVt == null)
-            {
-                return NotFound();
-            }
-            return View(courseVt);
-        }
-        [HttpPost,ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
-        {
-            Course? course = _courseRepository.Get(u => u.Id == id);
+            var course = _courseRepository.Get(c => c.Id == id);
             if (course == null)
             {
                 return NotFound();
             }
+
             _courseRepository.Delete(course);
             _courseRepository.Save();
             TempData["okey"] = "okey";
 
-            return RedirectToAction("Index", "Course");
+            return Json(new { success = true });
         }
-       
     }
 }

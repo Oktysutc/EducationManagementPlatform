@@ -104,6 +104,45 @@ namespace EducationManagementPlatform.Migrations
                     b.ToTable("CourseCategories");
                 });
 
+            modelBuilder.Entity("EducationManagementPlatform.Models.CourseInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CourseName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("File")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Information")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Owner")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Time")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseCategoryId");
+
+                    b.ToTable("Coursesing");
+                });
+
             modelBuilder.Entity("EducationManagementPlatform.Models.Rent", b =>
                 {
                     b.Property<int>("Id")
@@ -344,6 +383,7 @@ namespace EducationManagementPlatform.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Episode")
@@ -351,9 +391,6 @@ namespace EducationManagementPlatform.Migrations
 
                     b.Property<string>("Faculty")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Ogrencino")
-                        .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("AppUser");
                 });
@@ -370,6 +407,17 @@ namespace EducationManagementPlatform.Migrations
                 });
 
             modelBuilder.Entity("EducationManagementPlatform.Models.Course", b =>
+                {
+                    b.HasOne("EducationManagementPlatform.Models.CourseCategory", "CourseCategory")
+                        .WithMany()
+                        .HasForeignKey("CourseCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CourseCategory");
+                });
+
+            modelBuilder.Entity("EducationManagementPlatform.Models.CourseInfo", b =>
                 {
                     b.HasOne("EducationManagementPlatform.Models.CourseCategory", "CourseCategory")
                         .WithMany()

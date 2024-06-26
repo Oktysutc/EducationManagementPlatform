@@ -8,7 +8,7 @@ namespace EducationManagementPlatform.Models
         [Key]
         public int Id { get; set; }
         [Required(ErrorMessage ="not null")]
-        [MaxLength(25)]
+        [MaxLength(25)]// max girebileceği değer
         [DisplayName("kategori adı")]
         public string Name { get; set; }
     }

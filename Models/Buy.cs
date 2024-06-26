@@ -8,11 +8,11 @@ namespace EducationManagementPlatform.Models
     {
         [Key]//pk
         public int Id { get; set; }
-        [Required]
+        [Required]// boş geçilmesin
         public string StudentId { get; set; }
         // [Required]
         [ValidateNever]
-        public int CourseId { get; set; }
+        public int CourseId { get; set; }// kurs ile arasında foreign key ıd si var
         [ForeignKey("CourseId")]
         [ValidateNever]
         public Course Course { get; set; }

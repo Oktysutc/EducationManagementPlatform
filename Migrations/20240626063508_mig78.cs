@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EducationManagementPlatform.Migrations
 {
     /// <inheritdoc />
-    public partial class upMig5 : Migration
+    public partial class mig78 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,7 +31,6 @@ namespace EducationManagementPlatform.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Ogrencino = table.Column<int>(type: "int", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Faculty = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Episode = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -200,6 +199,31 @@ namespace EducationManagementPlatform.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Coursesing",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CourseName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Information = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Owner = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    Time = table.Column<double>(type: "float", nullable: false),
+                    CourseCategoryId = table.Column<int>(type: "int", nullable: false),
+                    File = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Coursesing", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Coursesing_CourseCategories_CourseCategoryId",
+                        column: x => x.CourseCategoryId,
+                        principalTable: "CourseCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Buys",
                 columns: table => new
                 {
@@ -214,6 +238,28 @@ namespace EducationManagementPlatform.Migrations
                     table.PrimaryKey("PK_Buys", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Buys_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rents",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CourseId = table.Column<int>(type: "int", nullable: false),
+                    RentPrice = table.Column<int>(type: "int", nullable: false),
+                    RentName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rents", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rents_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
@@ -268,6 +314,16 @@ namespace EducationManagementPlatform.Migrations
                 name: "IX_Courses_CourseCategoryId",
                 table: "Courses",
                 column: "CourseCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Coursesing_CourseCategoryId",
+                table: "Coursesing",
+                column: "CourseCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rents_CourseId",
+                table: "Rents",
+                column: "CourseId");
         }
 
         /// <inheritdoc />
@@ -290,6 +346,12 @@ namespace EducationManagementPlatform.Migrations
 
             migrationBuilder.DropTable(
                 name: "Buys");
+
+            migrationBuilder.DropTable(
+                name: "Coursesing");
+
+            migrationBuilder.DropTable(
+                name: "Rents");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
