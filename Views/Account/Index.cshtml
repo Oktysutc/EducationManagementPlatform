@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container text-center mt-5">
+    <h1 style="color: #001933;" class="display-4">Eğitim Yönetim Platformu</h1>
+    <br />
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <img src="~/img/main.jpg" class="img-fluid" alt="Main Image">
+        </div>
+    </div>
+    <br />
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#changePasswordModal">
+        Şifremi Değiştir
+    </button>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div id="changePasswordModalContent">
+                <!-- Partial View yükleme işlemi -->
+                @await Html.PartialAsync("_ChangePassword")
+            </div>
+        </div>
+    </div>
+</div>

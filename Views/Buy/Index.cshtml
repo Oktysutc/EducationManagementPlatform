@@ -1,42 +1,48 @@
 ﻿@model List<Buy>
 
-<div class="container">
-    <div class="row pt-3 pb-5">
-        <h1>Alışveriş</h1>
+<div class="container mt-5">
+    <div class="row pb-3">
+        <div class="col">
+            <h1 class="text-center">Alışveriş</h1>
+        </div>
     </div>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Kullanıcı No</th>
-                <th>Kurs No</th>
-                <th>Kurs</th>
-                <th>Satış Ücreti</th>
-                <th>Güncelle</th>
-                <th>Sil</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var buy in Model)
-            {
-                <tr>
-                    <td>@buy.Id</td>
-                    <td>@buy.StudentId</td>
-                    <td>@buy.CourseId</td>
-                    <td>@buy.Course.CourseName</td>
-                    <td>@buy.SalesPrice</td>
-                    <td>
-                        <button class="btn btn-lg btn-dark" style="width:90px;" onclick="openUpdateModal('@buy.Id')">Güncelle</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-lg btn-dark" style="width:90px;" onclick="openDeleteModal('@buy.Id')">Sil</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <div class="row pt-3 pb-2">
-        <div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-hover table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Kullanıcı No</th>
+                        <th>Kurs No</th>
+                        <th>Kurs</th>
+                        <th>Satış Ücreti</th>
+                        <th>Güncelle</th>
+                        <th>Sil</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var buy in Model)
+                    {
+                        <tr>
+                            <td>@buy.Id</td>
+                            <td>@buy.StudentId</td>
+                            <td>@buy.CourseId</td>
+                            <td>@buy.Course.CourseName</td>
+                            <td>@buy.SalesPrice</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning" onclick="openUpdateModal('@buy.Id')">Güncelle</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-danger" onclick="openDeleteModal('@buy.Id')">Sil</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row pt-3">
+        <div class="col text-right">
             <button class="btn btn-lg btn-primary" onclick="openAddModal()">Sepete Ekle</button>
         </div>
     </div>
@@ -55,7 +61,7 @@
             <div class="modal-body">
                 <form id="addForm">
                     <div class="form-group">
-                        <label for="CourseId">Kurs</label>
+                        <label for="addCourseId">Kurs</label>
                         <select class="form-control" id="addCourseId" name="CourseId" required>
                             @foreach (var course in ViewBag.CourseList)
                             {
@@ -64,11 +70,11 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="StudentId">Kullanıcı No</label>
+                        <label for="addStudentId">Kullanıcı No</label>
                         <input type="number" class="form-control" id="addStudentId" name="StudentId" required>
                     </div>
                     <div class="form-group">
-                        <label for="SalesPrice">Satış Ücreti</label>
+                        <label for="addSalesPrice">Satış Ücreti</label>
                         <input type="number" class="form-control" id="addSalesPrice" name="SalesPrice" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Ekle</button>
@@ -92,7 +98,7 @@
                 <form id="updateForm">
                     <input type="hidden" id="updateId" name="Id">
                     <div class="form-group">
-                        <label for="CourseId">Kurs</label>
+                        <label for="updateCourseId">Kurs</label>
                         <select class="form-control" id="updateCourseId" name="CourseId" required>
                             @foreach (var course in ViewBag.CourseList)
                             {
@@ -101,11 +107,11 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="StudentId">Kullanıcı No</label>
+                        <label for="updateStudentId">Kullanıcı No</label>
                         <input type="number" class="form-control" id="updateStudentId" name="StudentId" required>
                     </div>
                     <div class="form-group">
-                        <label for="SalesPrice">Satış Ücreti</label>
+                        <label for="updateSalesPrice">Satış Ücreti</label>
                         <input type="number" class="form-control" id="updateSalesPrice" name="SalesPrice" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Güncelle</button>

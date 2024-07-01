@@ -1,33 +1,39 @@
 ﻿@model List<CourseCategory>
 
-<div class="container">
-    <div class="row pt-3 pb-5">
-        <h1>Kurs Kategorileri</h1>
+<div class="container mt-5">
+    <div class="row pb-3">
+        <div class="col">
+            <h1 class="text-center">Kurs Kategorileri</h1>
+        </div>
     </div>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Kategori Adı</th>
-                <th>İşlemler</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var courseCategory in Model)
-            {
-                <tr>
-                    <td>@courseCategory.Id</td>
-                    <td>@courseCategory.Name</td>
-                    <td>
-                        <button class="btn btn-lg btn-dark" style="width:90px;" onclick="openUpdateModal('@courseCategory.Id')">Güncelle</button>
-                        <button class="btn btn-lg btn-dark" style="width:90px;" onclick="openDeleteModal('@courseCategory.Id')">Sil</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <div class="row pt-3 pb-2">
-        <div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-hover table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Kategori Adı</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var courseCategory in Model)
+                    {
+                        <tr>
+                            <td>@courseCategory.Id</td>
+                            <td>@courseCategory.Name</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning" onclick="openUpdateModal('@courseCategory.Id')">Güncelle</button>
+                                <button class="btn btn-sm btn-danger" onclick="openDeleteModal('@courseCategory.Id')">Sil</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row pt-3">
+        <div class="col text-right">
             <button class="btn btn-lg btn-primary" onclick="openAddModal()">Kurs Kategorisi Ekle</button>
         </div>
     </div>
@@ -46,7 +52,7 @@
             <div class="modal-body">
                 <form id="addForm">
                     <div class="form-group">
-                        <label for="Name">Kategori Adı</label>
+                        <label for="addName">Kategori Adı</label>
                         <input type="text" class="form-control" id="addName" name="Name" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Ekle</button>
@@ -70,7 +76,7 @@
                 <form id="updateForm">
                     <input type="hidden" id="updateId" name="Id">
                     <div class="form-group">
-                        <label for="Name">Kategori Adı</label>
+                        <label for="updateName">Kategori Adı</label>
                         <input type="text" class="form-control" id="updateName" name="Name" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Güncelle</button>

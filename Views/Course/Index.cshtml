@@ -1,46 +1,52 @@
 ﻿@model List<Course>
 
-<div class="container">
-    <div class="row pt-3 pb-5">
-        <h1>Kurslar</h1>
+<div class="container mt-5">
+    <div class="row pb-3">
+        <div class="col">
+            <h1 class="text-center">Kurslar</h1>
+        </div>
     </div>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Kurs Adı</th>
-                <th>Bilgi</th>
-                <th>Sahibi</th>
-                <th>Ücret</th>
-                <th>Zaman</th>
-                <th>Türü</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var course in Model)
-            {
-                <tr>
-                    <td>@course.Id</td>
-                    <td>@course.CourseName</td>
-                    <td>@course.Information</td>
-                    <td>@course.Owner</td>
-                    <td>@course.Price</td>
-                    <td>@course.Time</td>
-                    <td>@course.CourseCategory.Name</td>
-                    <td>
-                        <button class="btn btn-lg btn-dark" style="width:90px;" onclick="openUpdateModal('@course.Id')">Güncelle</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-lg btn-dark" style="width:90px;" onclick="openDeleteModal('@course.Id')">Sil</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <div class="row pt-3 pb-2">
-        <div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-hover table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Kurs Adı</th>
+                        <th>Bilgi</th>
+                        <th>Sahibi</th>
+                        <th>Ücret</th>
+                        <th>Zaman</th>
+                        <th>Türü</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var course in Model)
+                    {
+                        <tr>
+                            <td>@course.Id</td>
+                            <td>@course.CourseName</td>
+                            <td>@course.Information</td>
+                            <td>@course.Owner</td>
+                            <td>@course.Price</td>
+                            <td>@course.Time</td>
+                            <td>@course.CourseCategory.Name</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning" onclick="openUpdateModal('@course.Id')">Güncelle</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-danger" onclick="openDeleteModal('@course.Id')">Sil</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-right">
             <button class="btn btn-lg btn-primary" onclick="openAddModal()">Ekle</button>
         </div>
     </div>

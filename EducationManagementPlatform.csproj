@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Content Remove="Areas\Identity\Pages\Account\Manage\ChangePassword.cshtml" />
+    <Content Remove="Areas\Identity\Pages\Account\Manage\ChangePasswordModel.cshtml" />
     <Content Remove="Views\Course\Modal.cshtml" />
   </ItemGroup>
 
@@ -43,10 +44,16 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\ChangePassword.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Identity\Pages\Account\Manage\ChangePasswordModel.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Areas\Identity\Pages\Account\Manage\ChangePassword.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\ChangePasswordModel.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Identity\Pages\Account\Manage\ChangePasswordModel.cshtml" />
   </ItemGroup>
 
 	
