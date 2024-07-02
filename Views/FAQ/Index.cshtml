@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sık Sorulan Sorular - Eğitim Yönetim Platformu</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .accordion .card-header {
+            background-color: #f8f9fa;
+            cursor: pointer;
+        }
+
+        .accordion .card-body {
+            background-color: #ffffff;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .accordion .btn-link {
+            color: #007bff;
+            font-size: 1.25rem;
+            text-decoration: none;
+        }
+
+            .accordion .btn-link:hover {
+                text-decoration: underline;
+            }
+
+        .accordion .card {
+            border: none;
+            border-radius: 0;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center my-4">Sık Sorulan Sorular</h2>
+        <div class="accordion" id="faqAccordion">
+            <div class="card mb-3">
+                <div class="card-header" id="heading1">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                            Soru 1: Eğitim Yönetim Platformu nedir?
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapse1" class="collapse show" aria-labelledby="heading1" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        Eğitim Yönetim Platformu, eğitim kurumlarının ve öğrencilerin eğitim süreçlerini yönetmelerine yardımcı olan bir yazılımdır.
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-header" id="heading2">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                            Soru 2: Bu platform nasıl kullanılır?
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        Platform, kullanıcı dostu arayüzü sayesinde kolayca kullanılabilir. Eğitim kurumları ders programlarını, öğrenci bilgilerini ve notları yönetebilir.
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-header" id="heading3">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                            Soru 3: Platformun maliyeti nedir?
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#faqAccordion">
+                    <div class="card-body">
+                        Platformun maliyeti, kullanılan özelliklere ve kullanıcı sayısına bağlı olarak değişir. Detaylı bilgi için satış ekibimizle iletişime geçebilirsiniz.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

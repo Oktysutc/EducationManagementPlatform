@@ -1,13 +1,71 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Ana Sayfa";
 }
 
-<div class="container text-center mt-5">
-    <h1 style="color: #001933;" class="display-4">Eğitim Yönetim Platformu</h1>
-    <br />
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <img src="~/img/main.jpg" class="img-fluid" alt="Main Image">
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+       
+    </style>
+</head>
+<body>
+    <div class="container text-center mt-5 home-page">
+        <h1 class="display-4">Eğitim Yönetim Platformu</h1>
+        <p class="lead mt-3 mb-5">Hoş geldiniz! Eğitimde yeni bir döneme adım atın.</p>
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-8">
+                <img src="~/img/main.jpg" class="img-fluid rounded shadow" alt="Ana Görsel">
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">kategoriler</h5>
+                        <p class="card-text">Kategorilere göz atın.</p>
+                        <a asp-controller="CourseCategory" asp-action="Index" class="btn btn-primary">Kategorilere gidin.</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Kurslar</h5>
+                        <p class="card-text">Kurslarımıza detaylıca göz atın.</p>
+                        <a asp-controller="Course" asp-action="Index" class="btn btn-primary">kursları gör</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">İletişim</h5>
+                        <p class="card-text">Her türlü soru ve önerileriniz için bizimle iletişime geçin.</p>
+                        <a asp-controller="Buy" asp-action="Index" class="btn btn-primary">İletişime Geç</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">satın al</h5>
+                        <p class="card-text">Hemen satın almak için tıklayınız.</p>
+                        <a asp-controller="buy" asp-action="Index" class="btn btn-primary">Satın al</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+</body>
+</html>

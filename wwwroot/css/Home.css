@@ -1,0 +1,27 @@
+.home-page {
+    font-family: 'Roboto', sans-serif;
+}
+
+    .home-page h1 {
+        color: #001933;
+        font-weight: 700;
+    }
+
+    .home-page p.lead {
+        font-size: 1.25rem;
+        color: #333;
+    }
+
+    .home-page .card-title {
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+
+    .home-page .card-text {
+        font-size: 1.1rem;
+        color: #555;
+    }
+
+    .home-page .btn {
+        font-size: 1rem;
+    }

@@ -61,33 +61,37 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">| Anasayfa |</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"> | Anasayfa | </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">| Bilgi |</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy"> | Bilgi | </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="CourseCategory" asp-action="Index">| Kategoriler |</a>
+                            <a class="nav-link" asp-area="" asp-controller="CourseCategory" asp-action="Index"> | Kategoriler | </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Course" asp-action="Index">| Kurslar |</a>
+                            <a class="nav-link" asp-area="" asp-controller="Course" asp-action="Index"> | Kurslar | </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Buy" asp-action="Index">| Alışveriş |</a>
+                            <a class="nav-link" asp-area="" asp-controller="Buy" asp-action="Index"> | Alışveriş | </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Rent" asp-action="Index">| Kiralama |</a>
+                            <a class="nav-link" asp-area="" asp-controller="Rent" asp-action="Index"> | Kiralama | </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Contact" asp-action="Index">| İletişim |</a>
+                            <a class="nav-link" asp-area="" asp-controller="Contact" asp-action="Index"> | İletişim | </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="CourseInfo" asp-action="Index">| Kurs Bilgi |</a>
+                            <a class="nav-link" asp-area="" asp-controller="CourseInfo" asp-action="Index"> | Kurs Bilgi | </a>
                         </li>
                        
 
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Account" asp-action="ChangePassword">| PAROLAM |</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="FAQ" asp-action="Index">| SSS |</a>
                         </li>
 
                     </ul>
@@ -115,6 +119,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+  
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
