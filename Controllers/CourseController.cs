@@ -1,12 +1,16 @@
 ﻿using EducationManagementPlatform.Models;
 using EducationManagementPlatform.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EducationManagementPlatform.Controllers
 {
+   
     public class CourseController : Controller
     {
+
+
         private readonly ICourseRepository _courseRepository;
         private readonly ICourseCategoryRepository _courseCategoryRepository;
         public readonly IWebHostEnvironment _webHostEnvironment;
@@ -17,7 +21,7 @@ namespace EducationManagementPlatform.Controllers
             _courseCategoryRepository = courseCategoryRepository;
             _webHostEnvironment = webHostEnvironment;
         }
-
+        [Authorize(Roles = "Admin,User")]
         public IActionResult Index()
         {
             List<Course> objCourseList = _courseRepository.GetAll(includeProps: "CourseCategory").ToList();
@@ -30,8 +34,9 @@ namespace EducationManagementPlatform.Controllers
             ViewBag.CourseCategoryList = CourseCategoryList;
             return View(objCourseList);
         }
-
-        [HttpGet]
+       
+        [HttpGet] 
+        [Authorize(Roles = UserRoles.Role_Admin)]
         public IActionResult Get(int id)
         {
             var course = _courseRepository.Get(c => c.Id == id);
@@ -44,14 +49,15 @@ namespace EducationManagementPlatform.Controllers
                 id = course.Id,
                 courseName = course.CourseName,
                 courseCategoryId = course.CourseCategoryId,
-              //  description = course.Description,
+                //  description = course.Description,
                 price = course.Price,
-               // duration = course.Duration,
+                // duration = course.Duration,
                 file = course.File
             });
         }
-
+        
         [HttpPost]
+        [Authorize(Roles = UserRoles.Role_Admin)]
         public IActionResult AddUpdate(Course course, IFormFile? File)
         {
             if (ModelState.IsValid)
@@ -84,14 +90,15 @@ namespace EducationManagementPlatform.Controllers
                 _courseRepository.Save();
                 return Json(new { success = true });
 
-               
-                
+
+
             }
 
             return Json(new { success = false, message = "Model state is not valid." });
         }
-
+        
         [HttpPost]
+        [Authorize(Roles = UserRoles.Role_Admin)]
         public IActionResult Delete(int id)
         {
             var course = _courseRepository.Get(c => c.Id == id);

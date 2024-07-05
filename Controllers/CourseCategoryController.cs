@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EducationManagementPlatform.Controllers
 {
-    // [Authorize(Roles =UserRoles.Role_Admin)]
+     [Authorize(Roles =UserRoles.Role_Admin)]
     public class CourseCategoryController : Controller
     {
         private readonly ICourseCategoryRepository _courseCategoryRepository; // Dependency injection

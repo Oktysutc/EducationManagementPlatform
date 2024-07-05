@@ -29,6 +29,7 @@ builder.Services.AddScoped<IBuyRepository, BuyRepository>();
 builder.Services.AddScoped<IRentRepository, RentRepository>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<ICourseInfoRepository, CourseInfoRepository>();
+builder.Services.AddScoped<FeedbackController,  FeedbackController>();
 
 // Add email service configuration
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));

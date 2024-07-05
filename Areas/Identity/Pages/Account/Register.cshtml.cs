@@ -101,7 +101,11 @@ namespace EducationManagementPlatform.Areas.Identity.Pages.Account
            
             public string? Profession { get; set; }
             //public string? Faculty { get; set; }
-          //  public string? Episode { get; set; }
+            //  public string? Episode { get; set; }
+            [Required]
+            public string? Address { get; set; }
+            public string? Faculty { get; set; }
+            public string? Episode { get; set; }
         }
 
 
@@ -122,8 +126,10 @@ namespace EducationManagementPlatform.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
-               
-            
+                user.Address = Input.Address;
+                user.Faculty = Input.Faculty;
+                user.Episode = Input.Episode;
+
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

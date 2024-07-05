@@ -5,8 +5,9 @@ namespace EducationManagementPlatform.Models
 {
     public class AppUser : IdentityUser
     {
-        [Required]// ek kullanıcı sınııfı  burada oluşturuldu
+        // ek kullanıcı sınııfı  burada oluşturuldu
        // public int Ogrencino { get; set; }
+       [Required]
         public string? Address { get; set; }
         public string? Faculty { get; set; }
         public string? Episode { get; set; }

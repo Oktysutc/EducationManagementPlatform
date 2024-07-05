@@ -66,6 +66,9 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy"> | Bilgi | </a>
                         </li>
+                        @if(User.IsInRole(UserRoles.Role_Admin))
+                        {
+
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="CourseCategory" asp-action="Index"> | Kategoriler | </a>
                         </li>
@@ -78,13 +81,23 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Rent" asp-action="Index"> | Kiralama | </a>
                         </li>
+                        }
+                        @if (User.IsInRole(UserRoles.Role_User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Course" asp-action="Index"> | kurs liste | </a>
+                            </li>
+                        }
+
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Contact" asp-action="Index"> | İletişim | </a>
+                            <a class="nav-link" asp-area="" asp-controller="Contact" asp-action="Index"> | iletişim | </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="CourseInfo" asp-action="Index"> | Kurs Bilgi | </a>
                         </li>
-                       
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Feedback" asp-action="Form"> | bize ulaşın | </a>
+                        </li>
 
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Account" asp-action="ChangePassword">| PAROLAM |</a>

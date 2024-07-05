@@ -1,10 +1,12 @@
 ﻿using EducationManagementPlatform.Models;
 using EducationManagementPlatform.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EducationManagementPlatform.Controllers
 {
+    [Authorize(Roles = UserRoles.Role_Admin)]
     public class RentController : Controller
     {
         private readonly IRentRepository _rentRepository; // Dependency injection

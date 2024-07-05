@@ -16,6 +16,7 @@ namespace EducationManagementPlatform.Utility
         public DbSet<Rent> Rents { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }// kullanıcı işlemleri
         public DbSet<CourseInfo> Coursesing { get; set; }//kurs
+      
 
 
     }
