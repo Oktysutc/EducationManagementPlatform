@@ -1,0 +1,78 @@
+﻿@model EducationManagementPlatform.Models.Buy
+
+<h1 class="buy-title">Sepetim</h1>
+
+<div class="buy-detail-container">
+    <div class="buy-detail-info">
+        <h2>@Model.StudentId</h2>
+        <p><strong>Kullanıcı No:</strong> @Model.StudentId</p>
+        <p><strong>Kurs No::</strong> @Model.CourseId</p>
+        <p><strong>Kurs:</strong> @Model.Course</p>
+        
+        <p><strong>Resim:</strong> <img src="@Model.Course.File" alt="Buy Image" class="buy-image" /></p>
+    </div>
+    
+</div>
+
+@section Styles {
+    <style>
+        .buy-detail-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .buy-detail-info {
+            flex: 1;
+            margin-right: 20px;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-detail-video {
+            flex: 1;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .buy-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            color: #333;
+            background-color: #3BAF;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .buy-detail-info h2 {
+            margin-bottom: 15px;
+            color: #444;
+            border-bottom: 2px solid #3BAF;
+            padding-bottom: 5px;
+        }
+
+        .buy-detail-info p {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .buy-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border: 2px solid #3BAF;
+        }
+
+        
+    </style>
+}

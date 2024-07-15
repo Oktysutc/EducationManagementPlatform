@@ -33,6 +33,17 @@ namespace EducationManagementPlatform.Controllers
             return View(objBuyList);
         }
 
+        [Authorize(Roles = "Admin,User")]
+        public IActionResult Detail(int id)
+        {
+            var buy = _buyRepository.Get(c => c.Id == id, includeProps: "Buy");
+            if (buy == null)
+            {
+                return NotFound();
+            }
+            return View(buy);
+        }
+
         [HttpGet]
         public IActionResult Get(int id)
         {

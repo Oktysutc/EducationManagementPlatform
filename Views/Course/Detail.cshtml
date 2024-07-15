@@ -1,0 +1,108 @@
+﻿@model EducationManagementPlatform.Models.Course
+
+<h1 class="course-title">Kurs Detayı</h1>
+
+<div class="course-detail-container">
+    <div class="course-detail-info">
+        <h2>@Model.CourseName</h2>
+        <p><strong>Açıklama:</strong> @Model.Information</p>
+        <p><strong>Eğitmen:</strong> @Model.Owner</p>
+        <p><strong>Fiyat:</strong> @Model.Price</p>
+        <p><strong>Süre:</strong> @Model.Time</p>
+        <p><strong>Resim:</strong> <img src="@Model.File" alt="Course Image" class="course-image" /></p>
+    </div>
+    <div class="course-detail-video">
+        <h3>Tanıtım Videosu</h3>
+        @if (!string.IsNullOrEmpty(Model.VideoUrl))
+        {
+            <div class="video-container">
+                <iframe width="560" height="315" src="@Model.VideoUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        }
+        else
+        {
+            <p>Bu kurs için video bulunmamaktadır.</p>
+        }
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .course-detail-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-detail-info {
+            flex: 1;
+            margin-right: 20px;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-detail-video {
+            flex: 1;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            color: #333;
+            background-color: #3BAF;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .course-detail-info h2 {
+            margin-bottom: 15px;
+            color: #444;
+            border-bottom: 2px solid #3BAF;
+            padding-bottom: 5px;
+        }
+
+        .course-detail-info p {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .course-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border: 2px solid #3BAF;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            border-radius: 10px;
+            border: 2px solid #3BAF;
+        }
+
+            .video-container iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 10px;
+            }
+    </style>
+}

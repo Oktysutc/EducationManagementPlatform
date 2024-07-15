@@ -13,9 +13,9 @@ namespace EducationManagementPlatform.Utility
         public DbSet<CourseCategory> CourseCategories { get; set; }//kurs kategori
         public DbSet<Course> Courses { get; set; }//kurs
         public DbSet<Buy> Buys { get; set; }//satın alma işlemleri
-        public DbSet<Rent> Rents { get; set; }
+        //public DbSet<Rent> Rents { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }// kullanıcı işlemleri
-        public DbSet<CourseInfo> Coursesing { get; set; }//kurs
+       // public DbSet<CourseInfo> Coursesing { get; set; }//kurs
       
 
 

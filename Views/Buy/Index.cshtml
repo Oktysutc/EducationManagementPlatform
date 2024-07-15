@@ -1,4 +1,5 @@
 ﻿@model List<Buy>
+@using EducationManagementPlatform.Utility
 
 <div class="container mt-5">
     <div class="row pb-3">
@@ -15,7 +16,7 @@
                         <th>Kullanıcı No</th>
                         <th>Kurs No</th>
                         <th>Kurs</th>
-                        <th>Satış Ücreti</th>
+                        <th>Detay</th>
                         <th>Güncelle</th>
                         <th>Sil</th>
                     </tr>
@@ -28,7 +29,11 @@
                             <td>@buy.StudentId</td>
                             <td>@buy.CourseId</td>
                             <td>@buy.Course.CourseName</td>
-                            <td>@buy.SalesPrice</td>
+
+                            <td align="center" valign="middle">
+                                <a href="@Url.Action("Detail", "Course", new { id = buy.CourseId })" class="btn btn-sm btn-info">Detay</a>
+                            </td>
+
                             <td>
                                 <button class="btn btn-sm btn-warning" onclick="openUpdateModal('@buy.Id')">Güncelle</button>
                             </td>
@@ -49,11 +54,11 @@
 </div>
 
 <!-- Add Modal -->
-<div id="addModal" class="modal fade" tabindex="-1" role="dialog">
+<div id="addModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Satın Alma Ekle</h5>
+                <h5 class="modal-title" id="addModalLabel">Satın Alma Ekle</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -73,10 +78,7 @@
                         <label for="addStudentId">Kullanıcı No</label>
                         <input type="number" class="form-control" id="addStudentId" name="StudentId" required>
                     </div>
-                    <div class="form-group">
-                        <label for="addSalesPrice">Satış Ücreti</label>
-                        <input type="number" class="form-control" id="addSalesPrice" name="SalesPrice" required>
-                    </div>
+
                     <button type="submit" class="btn btn-primary">Ekle</button>
                 </form>
             </div>
@@ -85,11 +87,11 @@
 </div>
 
 <!-- Update Modal -->
-<div id="updateModal" class="modal fade" tabindex="-1" role="dialog">
+<div id="updateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Satın Alma Güncelle</h5>
+                <h5 class="modal-title" id="updateModalLabel">Satın Alma Güncelle</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -110,10 +112,7 @@
                         <label for="updateStudentId">Kullanıcı No</label>
                         <input type="number" class="form-control" id="updateStudentId" name="StudentId" required>
                     </div>
-                    <div class="form-group">
-                        <label for="updateSalesPrice">Satış Ücreti</label>
-                        <input type="number" class="form-control" id="updateSalesPrice" name="SalesPrice" required>
-                    </div>
+
                     <button type="submit" class="btn btn-primary">Güncelle</button>
                 </form>
             </div>
@@ -122,11 +121,11 @@
 </div>
 
 <!-- Delete Modal -->
-<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog">
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Satın Alma Sil</h5>
+                <h5 class="modal-title" id="deleteModalLabel">Satın Alma Sil</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -151,11 +150,17 @@
 
         function openUpdateModal(id) {
             $.get('/Buy/Get/' + id, function (data) {
-                $('#updateId').val(data.id);
-                $('#updateCourseId').val(data.courseId);
-                $('#updateStudentId').val(data.studentId);
-                $('#updateSalesPrice').val(data.salesPrice);
-                $('#updateModal').modal('show');
+                if (data) {
+                    $('#updateId').val(data.id);
+                    $('#updateCourseId').val(data.courseId);
+                    $('#updateStudentId').val(data.studentId);
+
+                    $('#updateModal').modal('show');
+                } else {
+                    alert("Kayıt bulunamadı.");
+                }
+            }).fail(function () {
+                alert("Bir hata oluştu, lütfen tekrar deneyin.");
             });
         }
 
@@ -169,6 +174,8 @@
             var formData = $(this).serialize();
             $.post('/Buy/AddUpdate', formData, function (data) {
                 location.reload();
+            }).fail(function () {
+                alert("Bir hata oluştu, lütfen tekrar deneyin.");
             });
         });
 
@@ -177,6 +184,8 @@
             var formData = $(this).serialize();
             $.post('/Buy/AddUpdate', formData, function (data) {
                 location.reload();
+            }).fail(function () {
+                alert("Bir hata oluştu, lütfen tekrar deneyin.");
             });
         });
 
@@ -185,6 +194,8 @@
             var formData = $(this).serialize();
             $.post('/Buy/Delete', formData, function (data) {
                 location.reload();
+            }).fail(function () {
+                alert("Bir hata oluştu, lütfen tekrar deneyin.");
             });
         });
     </script>

@@ -1,98 +1,74 @@
-﻿@{
-    ViewData["Title"] = "İletişim Formu";
-}
-<!DOCTYPE html>
-<html>
+﻿<!DOCTYPE html>
+<html lang="tr">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
+    <title>Eğitim Platformumuz Hakkında</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #495057;
             line-height: 1.6;
         }
 
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .contact-container {
-            text-align: center;
+        .container {
+            max-width: 800px;
+            margin: auto;
             padding: 20px;
-            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
         }
 
-        .contact-info {
+        h2 {
+            color: #343a40;
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 5px;
             margin-bottom: 20px;
-            color: #001933;
         }
 
-        .contact-button {
-            display: inline-block;
-            text-decoration: none;
-            color: white;
-            background-color: #001933;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            margin-bottom: 10px;
+        p {
+            margin-bottom: 20px;
         }
 
-            .contact-button:hover {
-                background-color: #004466;
-            }
-
-        .form-container {
+        .footer {
+            text-align: center;
             margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+            color: #777;
         }
 
-        .form-input {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        .form-button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #001933;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-            .form-button:hover {
-                background-color: #004466;
+            .footer a {
+                color: #007bff;
+                text-decoration: none;
             }
+
+                .footer a:hover {
+                    text-decoration: underline;
+                }
     </style>
 </head>
 <body>
-    <h1>@ViewData["Title"]</h1>
-    <div class="contact-container">
-        <div class="contact-info">
-            <h3>Telefon: 05369473152</h3>
-            <h3>Adres: İstanbul, Bahçelievler</h3>
-            <h3>E-posta: oktysutc@gmail.com</h3>
-        </div>
-        <form id="contactForm" class="form-container" action="/submit_contact_form" method="post">
-            <input type="text" id="fullName" name="fullName" class="form-input" placeholder="Mesajınız" required>
-            <input type="tel" id="phoneNumber" name="phoneNumber" class="form-input" placeholder="Telefon Numaranız" required>
-            <button type="submit" class="form-button">Bize Ulaşın</button>
-        </form>
+
+    <div class="container">
+        <header style="text-align: center; margin-bottom: 30px;">
+            <h2>Eğitim Platformumuz Hakkında</h2>
+        </header>
+
+        <section>
+            <p><strong>Eğitim Yönetim Platformu</strong>, sizlere zengin eğitim içerikleri sunarak öğrenme sürecinizi destekleyen bir platformdur. Kullanıcı dostu arayüzü ve çeşitli eğitim seçenekleri ile öğrenme deneyiminizi keyifli hale getirir.</p>
+
+            <p>Platformumuzda, çeşitli kategorilerde yer alan kurslarımızı keşfedebilir, uzman eğitmenlerden öğretici videolar izleyebilir ve interaktif materyallerle desteklenmiş eğitim içeriklerine erişebilirsiniz.</p>
+
+            <p>Bizimle birlikte öğrenme yolculuğunuza başlamak için hemen kayıt olabilirsiniz. Sizlere güvenli, erişilebilir ve etkili bir öğrenme deneyimi sunmayı amaçlıyoruz.</p>
+        </section>
     </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Eğitim Yönetim Platformu - Tüm hakları saklıdır. | <a href="#">Gizlilik Politikası</a></p>
+    </footer>
+
 </body>
 </html>

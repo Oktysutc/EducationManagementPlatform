@@ -1,4 +1,9 @@
-﻿@{
+﻿@using EducationManagementPlatform.Utility
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+
+@{
     ViewData["Title"] = "Ana Sayfa";
 }
 
@@ -10,58 +15,352 @@
     <title>@ViewData["Title"]</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-       
+        /* CSS stillerinizi buraya ekleyin */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+            .search-container .input-group {
+                width: 100%;
+                width: 1200px;
+            }
+
+            .search-container .form-control {
+                height: 55px;
+                font-size: 18px;
+            }
+
+            .search-container .btn {
+                height: 55px;
+                font-size: 18px;
+            }
+
+        .card-with-image {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            height: 170px;
+            border: none; /* Kart kenarlığını kaldırır */
+        }
+
+            .card-with-image .background-image {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+                transition: filter 0.3s ease-in-out;
+            }
+
+            .card-with-image:hover .background-image {
+                filter: brightness(0.5); /* Kartın üzerine gelindiğinde arka plan resminin rengini değiştirmek için */
+            }
+
+            .card-with-image .card-body {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: rgba(0, 0, 0, 0.6);
+                padding: 10px;
+                z-index: 2;
+                width: 100%;
+                opacity: 0; /* Kartın başlangıçta metinleri gizlemek için */
+                transition: opacity 0.3s ease-in-out;
+            }
+
+            .card-with-image:hover .card-body {
+                opacity: 1; /* Kartın üzerine gelindiğinde metinleri göstermek için */
+            }
+
+            .card-with-image .card-title,
+            .card-with-image .card-text {
+                color: #fff;
+                z-index: 3; /* Metinlerin arka plan resminin üzerinde olmasını sağlar */
+            }
+
+
+
     </style>
 </head>
 <body>
     <div class="container text-center mt-5 home-page">
         <h1 class="display-4">Eğitim Yönetim Platformu</h1>
         <p class="lead mt-3 mb-5">Hoş geldiniz! Eğitimde yeni bir döneme adım atın.</p>
+
+        <div class="search-container">
+            <form asp-controller="Course" asp-action="Index" method="get" class="form-inline">
+                <div class="input-group">
+                    <input type="text" name="searchQuery" class="form-control" placeholder="Kurs Ara..." />
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Ara</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <div class="row justify-content-center mb-5">
             <div class="col-md-8">
                 <img src="~/img/main.jpg" class="img-fluid rounded shadow" alt="Ana Görsel">
             </div>
         </div>
-        <div class="row text-center">
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">kategoriler</h5>
-                        <p class="card-text">Kategorilere göz atın.</p>
-                        <a asp-controller="CourseCategory" asp-action="Index" class="btn btn-primary">Kategorilere gidin.</a>
+
+        @if (SignInManager.IsSignedIn(User))
+        {
+            @if (User.IsInRole(UserRoles.Role_Admin))
+            {
+                <div class="row text-center">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Kategoriler</h5>
+                                <p class="card-text">Kategorilere göz atın.</p>
+                                <a asp-controller="CourseCategory" asp-action="Index" class="btn btn-primary">Kategorilere gidin</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Kurslar</h5>
+                                <p class="card-text">Kurslarımıza detaylıca göz atın.</p>
+                                <a asp-controller="Course" asp-action="Index" class="btn btn-primary">Kursları gör</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">İletişim</h5>
+                                <p class="card-text">Her türlü soru ve önerileriniz için bizimle iletişime geçin.</p>
+                                <a asp-controller="Contact" asp-action="Index" class="btn btn-primary">İletişime Geç</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Satın Al</h5>
+                                <p class="card-text">Hemen satın almak için tıklayınız.</p>
+                                <a asp-controller="Buy" asp-action="Index" class="btn btn-primary">Satın Al</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Kurslar</h5>
-                        <p class="card-text">Kurslarımıza detaylıca göz atın.</p>
-                        <a asp-controller="Course" asp-action="Index" class="btn btn-primary">kursları gör</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">İletişim</h5>
-                        <p class="card-text">Her türlü soru ve önerileriniz için bizimle iletişime geçin.</p>
-                        <a asp-controller="Contact" asp-action="Index" class="btn btn-primary">İletişime Geç</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">satın al</h5>
-                        <p class="card-text">Hemen satın almak için tıklayınız.</p>
-                        <a asp-controller="buy" asp-action="Index" class="btn btn-primary">Satın al</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+            }
+        }
+        else
+        {
+            <p>Uygulamaya giriş yapın.</p>
+        }
     </div>
 
+    @if (SignInManager.IsSignedIn(User))
+    {
+        @if (User.IsInRole(UserRoles.Role_User))
+        {
+            <div>
+                <div class="row text-center">
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course")'">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%;" src="~/img/programlama.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                        </div>
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Programlama</h5>
+                                <p class="card-text">Programlama kategorisindeki kurslarıma göz atın..</p>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+
+                     <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course")'">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%;" src="~/img/web.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                        </div>
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Web</h5>
+                                <p class="card-text">Web kategorisindeki kurslarıma göz atın..</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <br />
+
+                     <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course")'">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%;" src="~/img/design.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                        </div>
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Tasarım</h5>
+                                <p class="card-text">Tasarım kategorisindeki kurslarıma göz atın..</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <br />
+
+                     <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course")'">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%;" src="~/img/ağ.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                        </div>
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Ağ</h5>
+                                <p class="card-text">Ağ kategorisindeki kurslarıma göz atın..</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <br />
+
+
+                     <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course")'">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%;" src="~/img/dil.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                        </div>
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Dil</h5>
+                                <p class="card-text">Dil kategorisindeki kurslarıma göz atın..</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <br />
+
+
+                     <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course")'">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%;" src="~/img/oyun.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                        </div>
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">oyun</h5>
+                                <p class="card-text">oyun kategorisindeki kurslarıma göz atın..</p>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+
+
+
+
+                     <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course")'">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%;" src="~/img/masaüstüü.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                        </div>
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Masaüstü</h5>
+                                <p class="card-text">Masaüstü kategorisindeki kurslarıma göz atın...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course")'">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%;" src="~/img/Gömülüü.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                        </div>
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Gömülü</h5>
+                                <p class="card-text">Gömülü kategorisindeki kurslarıma göz atın...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course")'">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%;" src="~/img/sunucuu.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                        </div>
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">sunucu</h5>
+                                <p class="card-text">sunucu kategorisindeki kurslarıma göz atın...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course")'">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%;" src="~/img/veritabanıı.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                        </div>
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">veritabanı</h5>
+                                <p class="card-text">veritabanı kategorisindeki kurslarıma göz atın...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course")'">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%;" src="~/img/mobill.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                        </div>
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">mobil</h5>
+                                <p class="card-text">mobil kategorisindeki kurslarıma göz atın...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course")'">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%;" src="~/img/backendd.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                        </div>
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">backend</h5>
+                                <p class="card-text">backend kategorisindeki kurslarıma göz atın...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course")'">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%;" src="~/img/frontendd.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                        </div>
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">frontend</h5>
+                                <p class="card-text">frontend kategorisindeki kurslarıma göz atın...</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <br />
+
+
+
+                    
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p>Detaylı özellikleri keşfetmek için uygulamaya giriş yapın.</p>
+    }
     @section Scripts {
         @{
             await Html.RenderPartialAsync("_ValidationScriptsPartial");

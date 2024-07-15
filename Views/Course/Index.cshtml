@@ -7,19 +7,39 @@
             <h1 class="text-center">Kurslar</h1>
         </div>
     </div>
+
+    <!-- Arama formu -->
+    <div class="row pb-3 justify-content-end">
+        <div class="col-auto">
+            <form asp-controller="Course" asp-action="Index" method="get" class="form-inline">
+                <div class="input-group">
+                    <input type="text" name="searchQuery" class="form-control form-control-sm" placeholder="Kurs Ara..." />
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary btn-sm">Ara</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
     <div class="row">
         <div class="col">
             <table class="table table-hover table-striped table-bordered">
                 <thead class="thead-dark">
                     <tr>
-                        <th  align="center" valign="middle"> </th>
-                        <th  align="center" valign="middle">Id</th>
-                        <th  align="center" valign="middle">Kurs Adı</th>
-                        <th  align="center" valign="middle">Bilgi</th>
-                        <th  align="center" valign="middle">Sahibi</th>
-                        <th  align="center" valign="middle">Ücret</th>
-                        <th  align="center" valign="middle">Zaman</th>
-                        <th  align="center" valign="middle">Türü</th>
+                        <th align="center" valign="middle"> </th>
+                        <br />
+                        <th align="center" valign="middle">Id</th>
+                       <br />
+                        <th align="center" valign="middle">Kurs Adı</th>
+                        <th align="center" valign="middle">Bilgi</th>
+                        <th align="center" valign="middle">Sahibi</th>
+                        <th align="center" valign="middle">Ücret</th>
+                        <th align="center" valign="middle">Zaman</th>
+                        <th align="center" valign="middle">Türü</th>
+                        <!--<th align="center" valign="middle">Video</th>-->
+                        <th align="center" valign="middle"></th>
                         @if (User.IsInRole(UserRoles.Role_Admin))
                         {
                             <th></th>
@@ -31,167 +51,186 @@
                     @foreach (var course in Model)
                     {
                         <tr>
-                        <td align="center" valign="middle">
-                        <img src="@course.File" style="border-radius:7px solid #bbb9b9; max-width:145px; max:275px;" />
-                        </td>
-                        <td align="center" valign="middle">@course.Id</td>
-                        <td  align="center" valign="middle">@course.CourseName</td>
-                        <td  align="center" valign="middle">@course.Information</td>
-                        <td  align="center" valign="middle">@course.Owner</td>
-                        <td  align="center" valign="middle">@course.Price</td>
-                        <td  align="center" valign="middle">@course.Time</td>
-                        <td  align="center" valign="middle">@course.CourseCategory.Name</td>
+                            <td align="center" valign="middle">
+                                <img src="@course.File" style="border-radius:7px solid #bbb9b9; max-width:145px; max:275px;" />
+                            </td>
+                          
+                            <td align="center" valign="middle">@course.Id</td>
 
-                        @if (User.IsInRole(UserRoles.Role_Admin))
-                        {
+                            <td align="center" valign="middle">@course.CourseName</td>
+                            <td align="center" valign="middle">@course.Information</td>
+                            <td align="center" valign="middle">@course.Owner</td>
+                            <td align="center" valign="middle">@course.Price</td>
+                            <td align="center" valign="middle">@course.Time</td>
+                            <td align="center" valign="middle">@course.CourseCategory.Name</td>
+                            <!--<td align="center" valign="middle">
+                                <iframe width="150" height="100" src="@course.VideoUrl" frameborder="0" allowfullscreen></iframe>
+                            </td>-->
+                            <td align="center" valign="middle">
+                                <a href="@Url.Action("Detail", "Course", new { id = course.Id })" class="btn btn-sm btn-info">Detay</a>
+                            </td>
+
+                            @if (User.IsInRole(UserRoles.Role_Admin))
+                            {
                                 <td align="center" valign="middle">
-                            <button class="btn btn-sm btn-warning" onclick="openUpdateModal('@course.Id')">Güncelle</button>
-                        </td>
+                                    <button class="btn btn-sm btn-warning" onclick="openUpdateModal('@course.Id')">Güncelle</button>
+                                </td>
                                 <td align="center" valign="middle">
-                            <button class="btn btn-sm btn-danger" onclick="openDeleteModal('@course.Id')">Sil</button>
-                        </td>
-                        }
-                    </tr>
+                                    <button class="btn btn-sm btn-danger" onclick="openDeleteModal('@course.Id')">Sil</button>
+                                </td>
+                            }
+                        </tr>
                     }
                 </tbody>
             </table>
         </div>
     </div>
-    @if(User.IsInRole(UserRoles.Role_Admin))
+
+    @if (User.IsInRole(UserRoles.Role_Admin))
     {
-    <div class="row">
-        <div class="col text-right">
-            <button class="btn btn-lg btn-primary" onclick="openAddModal()">Ekle</button>
+        <div class="row">
+            <div class="col text-right">
+                <button class="btn btn-lg btn-primary" onclick="openAddModal()">Ekle</button>
+            </div>
         </div>
-    </div>
     }
 </div>
 
 <!-- Add Modal -->
 <div id="addModal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Kurs Ekle</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="addForm" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="addCourseName">Kurs Adı</label>
-                            <input type="text" class="form-control" id="addCourseName" name="CourseName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="addCourseCategoryId">Kategori</label>
-                            <select class="form-control" id="addCourseCategoryId" name="CourseCategoryId" required>
-                                                        @foreach (var category in ViewBag.CourseCategoryList)
-                                                        {
-                                    <option value="@category.Value">@category.Text</option>
-                                                        }
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="addInformation">Bilgi</label>
-                            <textarea class="form-control" id="addInformation" name="Information" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="addOwner">Sahibi</label>
-                            <input type="text" class="form-control" id="addOwner" name="Owner" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="addPrice">Ücret</label>
-                            <input type="number" class="form-control" id="addPrice" name="Price" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="addTime">Zaman</label>
-                            <input type="number" class="form-control" id="addTime" name="Time" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="addFile">Resim</label>
-                            <input type="file" class="form-control" id="addFile" name="File" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Ekle</button>
-                    </form>
-                </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kurs Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="addCourseName">Kurs Adı</label>
+                        <input type="text" class="form-control" id="addCourseName" name="CourseName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addCourseCategoryId">Kategori</label>
+                        <select class="form-control" id="addCourseCategoryId" name="CourseCategoryId" required>
+                            @foreach (var category in ViewBag.CourseCategoryList)
+                            {
+                                <option value="@category.Value">@category.Text</option>
+                            }
+                        </select>
+                    </div>  
+                    <div class="form-group">
+                        <label for="addInformation">Bilgi</label>
+                        <textarea class="form-control" id="addInformation" name="Information" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="addOwner">Sahibi</label>
+                        <input type="text" class="form-control" id="addOwner" name="Owner" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addPrice">Ücret</label>
+                        <input type="number" class="form-control" id="addPrice" name="Price" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addTime">Zaman</label>
+                        <input type="number" class="form-control" id="addTime" name="Time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addFile">Resim</label>
+                        <input type="file" class="form-control" id="addFile" name="File" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addVideoUrl">Video URL</label>
+                        <input type="text" class="form-control" id="addVideoUrl" name="VideoUrl">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Update Modal -->
-    <div id="updateModal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Kurs Güncelle</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="updateForm" enctype="multipart/form-data">
-                        <input type="hidden" id="updateId" name="Id">
-                        <div class="form-group">
-                            <label for="updateCourseName">Kurs Adı</label>
-                            <input type="text" class="form-control" id="updateCourseName" name="CourseName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="updateCourseCategoryId">Kategori</label>
-                            <select class="form-control" id="updateCourseCategoryId" name="CourseCategoryId" required>
-                                                    @foreach (var category in ViewBag.CourseCategoryList)
-                                                    {
-                                    <option value="@category.Value">@category.Text</option>
-                                                    }
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="updateInformation">Bilgi</label>
-                            <textarea class="form-control" id="updateInformation" name="Information" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="updateOwner">Sahibi</label>
-                            <input type="text" class="form-control" id="updateOwner" name="Owner" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="updatePrice">Ücret</label>
-                            <input type="number" class="form-control" id="updatePrice" name="Price" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="updateTime">Zaman</label>
-                            <input type="number" class="form-control" id="updateTime" name="Time" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="updateFile">Resim</label>
-                            <input type="file" class="form-control" id="updateFile" name="File">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Güncelle</button>
-                    </form>
-                </div>
+<!-- Update Modal -->
+<div id="updateModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kurs Güncelle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="updateForm" enctype="multipart/form-data">
+                    <input type="hidden" id="updateId" name="Id">
+                    <div class="form-group">
+                        <label for="updateCourseName">Kurs Adı</label>
+                        <input type="text" class="form-control" id="updateCourseName" name="CourseName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateCourseCategoryId">Kategori</label>
+                        <select class="form-control" id="updateCourseCategoryId" name="CourseCategoryId" required>
+                            @foreach (var category in ViewBag.CourseCategoryList)
+                            {
+                                <option value="@category.Value">@category.Text</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateInformation">Bilgi</label>
+                        <textarea class="form-control" id="updateInformation" name="Information" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateOwner">Sahibi</label>
+                        <input type="text" class="form-control" id="updateOwner" name="Owner" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updatePrice">Ücret</label>
+                        <input type="number" class="form-control" id="updatePrice" name="Price" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateTime">Zaman</label>
+                        <input type="number" class="form-control" id="updateTime" name="Time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateFile">Resim</label>
+                        <input type="file" class="form-control" id="updateFile" name="File">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateVideoUrl">Video URL</label>
+                        <input type="text" class="form-control" id="updateVideoUrl" name="VideoUrl">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Güncelle</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Delete Modal -->
-    <div id="deleteModal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Kurs Sil</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Bu kursu silmek istediğinizden emin misiniz?</p>
-                    <button type="button" class="btn btn-danger" onclick="deleteCourse()">Sil</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
-                </div>
+<!-- Delete Modal -->
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kurs Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bu kursu silmek istediğinizden emin misiniz?</p>
+                <button type="button" class="btn btn-danger" onclick="deleteCourse()">Sil</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
             </div>
         </div>
     </div>
+</div>
 
-                        @section Scripts {
+@section Scripts {
     <script>
         function openAddModal() {
             $('#addModal').modal('show');
@@ -210,6 +249,7 @@
                     $('#updateOwner').val(data.owner);
                     $('#updatePrice').val(data.price);
                     $('#updateTime').val(data.time);
+                    $('#updateVideoUrl').val(data.videoUrl);
                     $('#updateModal').modal('show');
                 }
             });
@@ -227,6 +267,7 @@
                 data: { id: window.courseToDelete },
                 success: function (data) {
                     if (data.success) {
+                        $('#deleteModal').modal('hide');
                         location.reload();
                     } else {
                         alert('Kurs silinemedi.');
@@ -238,6 +279,7 @@
         $('#addForm').submit(function (e) {
             e.preventDefault();
             var formData = new FormData(this);
+            formData.append("VideoUrl", $('#addVideoUrl').val()); // Corrected syntax here
             $.ajax({
                 url: '@Url.Action("AddUpdate", "Course")',
                 type: 'POST',
@@ -249,7 +291,7 @@
                         $('#addModal').modal('hide');
                         location.reload();
                     } else {
-                        alert('Kurs eklenemedi.');
+                        alert('girdiğiniz değerleri kontrol edin');
                     }
                 }
             });
@@ -258,6 +300,7 @@
         $('#updateForm').submit(function (e) {
             e.preventDefault();
             var formData = new FormData(this);
+            formData.append("VideoUrl", $('#updateVideoUrl').val()); // Corrected syntax here
             $.ajax({
                 url: '@Url.Action("AddUpdate", "Course")',
                 type: 'POST',
@@ -275,4 +318,4 @@
             });
         });
     </script>
-                        }
+}

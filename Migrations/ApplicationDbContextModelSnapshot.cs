@@ -79,6 +79,9 @@ namespace EducationManagementPlatform.Migrations
                     b.Property<double>("Time")
                         .HasColumnType("float");
 
+                    b.Property<string>("VideoUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CourseCategoryId");
@@ -102,45 +105,6 @@ namespace EducationManagementPlatform.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CourseCategories");
-                });
-
-            modelBuilder.Entity("EducationManagementPlatform.Models.CourseInfo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CourseCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CourseName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("File")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Information")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Owner")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Time")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseCategoryId");
-
-                    b.ToTable("Coursesing");
                 });
 
             modelBuilder.Entity("EducationManagementPlatform.Models.Rent", b =>
@@ -407,17 +371,6 @@ namespace EducationManagementPlatform.Migrations
                 });
 
             modelBuilder.Entity("EducationManagementPlatform.Models.Course", b =>
-                {
-                    b.HasOne("EducationManagementPlatform.Models.CourseCategory", "CourseCategory")
-                        .WithMany()
-                        .HasForeignKey("CourseCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CourseCategory");
-                });
-
-            modelBuilder.Entity("EducationManagementPlatform.Models.CourseInfo", b =>
                 {
                     b.HasOne("EducationManagementPlatform.Models.CourseCategory", "CourseCategory")
                         .WithMany()

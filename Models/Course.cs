@@ -26,6 +26,8 @@ namespace EducationManagementPlatform.Models
         public CourseCategory? CourseCategory { get; set; }
         [ValidateNever]
         public string? File { get;set; }
-
+        [ValidateNever]
+        
+        public string? VideoUrl { get; set; } // Video URL alanı
     }
 }

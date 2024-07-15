@@ -26,9 +26,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<ICourseCategoryRepository, CourseCategoryRepository>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<IBuyRepository, BuyRepository>();
-builder.Services.AddScoped<IRentRepository, RentRepository>();
+
 builder.Services.AddScoped<IEmailSender, EmailSender>();
-builder.Services.AddScoped<ICourseInfoRepository, CourseInfoRepository>();
+//builder.Services.AddScoped<ICourseInfoRepository, CourseInfoRepository>();
 builder.Services.AddScoped<FeedbackController,  FeedbackController>();
 
 // Add email service configuration

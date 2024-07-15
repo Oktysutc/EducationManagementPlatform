@@ -6,11 +6,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EducationManagementPlatform.Controllers
 {
-   
     public class CourseController : Controller
     {
-
-
         private readonly ICourseRepository _courseRepository;
         private readonly ICourseCategoryRepository _courseCategoryRepository;
         public readonly IWebHostEnvironment _webHostEnvironment;
@@ -21,10 +18,20 @@ namespace EducationManagementPlatform.Controllers
             _courseCategoryRepository = courseCategoryRepository;
             _webHostEnvironment = webHostEnvironment;
         }
-        [Authorize(Roles = "Admin,User")]
-        public IActionResult Index()
+
+       // [Authorize(Roles = "Admin,User")]
+        public IActionResult Index(string searchQuery)
         {
-            List<Course> objCourseList = _courseRepository.GetAll(includeProps: "CourseCategory").ToList();
+            List<Course> objCourseList;
+            if (string.IsNullOrEmpty(searchQuery))
+            {
+                objCourseList = _courseRepository.GetAll(includeProps: "CourseCategory").ToList();
+            }
+            else
+            {
+                objCourseList = _courseRepository.SearchCourses(searchQuery).ToList();
+            }
+
             IEnumerable<SelectListItem> CourseCategoryList = _courseCategoryRepository.GetAll()
                 .Select(k => new SelectListItem
                 {
@@ -32,11 +39,23 @@ namespace EducationManagementPlatform.Controllers
                     Value = k.Id.ToString()
                 });
             ViewBag.CourseCategoryList = CourseCategoryList;
+            ViewBag.SearchQuery = searchQuery; // Arama sorgusunu ViewBag'de saklayın
             return View(objCourseList);
         }
-       
-        [HttpGet] 
-        [Authorize(Roles = UserRoles.Role_Admin)]
+
+        //[Authorize(Roles = "Admin,User")]
+        public IActionResult Detail(int id)
+        {
+            var course = _courseRepository.Get(c => c.Id == id, includeProps: "CourseCategory");
+            if (course == null)
+            {
+                return NotFound();
+            }
+            return View(course);
+        }
+
+        [HttpGet]
+       // [Authorize(Roles = "Admin,User")]
         public IActionResult Get(int id)
         {
             var course = _courseRepository.Get(c => c.Id == id);
@@ -49,15 +68,14 @@ namespace EducationManagementPlatform.Controllers
                 id = course.Id,
                 courseName = course.CourseName,
                 courseCategoryId = course.CourseCategoryId,
-                //  description = course.Description,
                 price = course.Price,
-                // duration = course.Duration,
-                file = course.File
+                file = course.File,
+                videoUrl = course.VideoUrl
             });
         }
-        
+
         [HttpPost]
-        [Authorize(Roles = UserRoles.Role_Admin)]
+        //[Authorize(Roles = UserRoles.Role_Admin)]
         public IActionResult AddUpdate(Course course, IFormFile? File)
         {
             if (ModelState.IsValid)
@@ -77,6 +95,13 @@ namespace EducationManagementPlatform.Controllers
                     course.File = $"/img/{fileName}";
                 }
 
+                // YouTube URL'sini embed URL'ye dönüştürme
+                if (!string.IsNullOrEmpty(course.VideoUrl))
+                {
+                    var uri = new Uri(course.VideoUrl);
+                    var videoId = System.Web.HttpUtility.ParseQueryString(uri.Query).Get("v");
+                    course.VideoUrl = $"https://www.youtube.com/embed/{videoId}";
+                }
                 if (course.Id == 0)
                 {
                     _courseRepository.Add(course);
@@ -89,16 +114,13 @@ namespace EducationManagementPlatform.Controllers
 
                 _courseRepository.Save();
                 return Json(new { success = true });
-
-
-
             }
 
             return Json(new { success = false, message = "Model state is not valid." });
         }
-        
+
         [HttpPost]
-        [Authorize(Roles = UserRoles.Role_Admin)]
+       // [Authorize(Roles = UserRoles.Role_Admin)]
         public IActionResult Delete(int id)
         {
             var course = _courseRepository.Get(c => c.Id == id);

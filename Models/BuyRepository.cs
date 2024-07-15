@@ -20,5 +20,9 @@ namespace EducationManagementPlatform.Models
         {
             _applicationDbContext.SaveChanges();
         }
+        public Buy Get(int id)
+        {
+            return _applicationDbContext.Buys.FirstOrDefault(c => c.Id == id);
+        }
     }
 }

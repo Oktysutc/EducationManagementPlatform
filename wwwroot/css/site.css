@@ -20,10 +20,45 @@ html {
 body {
   margin-bottom: 60px;
 }
+    body.dark-mode {
+        background-color: #121212;
+        color: #ffffff;
+    }
+
+/* Diðer karanlýk mod stillerini burada tanýmlayabilirsiniz */
+
+#darkModeToggle {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+body.dark-mode #darkModeToggle {
+    background-color: #000000;
+    color: #ffffff;
+}
 
 
 
 
+.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+    .dark-mode a {
+        color: #ffffff;
+    }
+
+    .dark-mode .navbar {
+        background-color: #333;
+    }
+
+        .dark-mode .navbar a {
+            color: #ffffff;
+        }
 
 
 
