@@ -19,19 +19,21 @@ namespace EducationManagementPlatform.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-       // [Authorize(Roles = "Admin,User")]
-        public IActionResult Index(string searchQuery)
+        // [Authorize(Roles = "Admin,User")]
+        public IActionResult Index(string category)
         {
             List<Course> objCourseList;
-            if (string.IsNullOrEmpty(searchQuery))
+
+            if (string.IsNullOrEmpty(category))
             {
                 objCourseList = _courseRepository.GetAll(includeProps: "CourseCategory").ToList();
             }
             else
             {
-                objCourseList = _courseRepository.SearchCourses(searchQuery).ToList();
+                objCourseList = _courseRepository.GetCoursesByCategory(category).ToList();
             }
 
+            // Tüm kategori seçeneklerini dropdown listesi olarak al
             IEnumerable<SelectListItem> CourseCategoryList = _courseCategoryRepository.GetAll()
                 .Select(k => new SelectListItem
                 {
@@ -39,8 +41,22 @@ namespace EducationManagementPlatform.Controllers
                     Value = k.Id.ToString()
                 });
             ViewBag.CourseCategoryList = CourseCategoryList;
-            ViewBag.SearchQuery = searchQuery; // Arama sorgusunu ViewBag'de saklayın
+            ViewBag.SelectedCategory = category; // Seçilen kategoriyi ViewBag'de sakla
+
             return View(objCourseList);
+        }
+
+
+
+
+        [HttpGet]
+        public IActionResult Category(string category)
+        {
+            // Kategoriye göre kursları getir
+            var courses = _courseRepository.GetCoursesByCategory(category);
+
+            // Kurs listesini view'e gönder
+            return View("Category", courses);
         }
 
         //[Authorize(Roles = "Admin,User")]

@@ -21,6 +21,14 @@
             </form>
         </div>
     </div>
+    @if (User.IsInRole(UserRoles.Role_Admin))
+    {
+        <div class="row">
+            <div align="center" valign="middle" class="col text-right">
+                <button align="center" valign="middle" class="btn btn-lg btn-primary" onclick="openAddModal()">Ekle</button>
+            </div>
+        </div>
+    }
 
 
     <div class="row">
@@ -86,14 +94,7 @@
         </div>
     </div>
 
-    @if (User.IsInRole(UserRoles.Role_Admin))
-    {
-        <div class="row">
-            <div class="col text-right">
-                <button class="btn btn-lg btn-primary" onclick="openAddModal()">Ekle</button>
-            </div>
-        </div>
-    }
+    
 </div>
 
 <!-- Add Modal -->
