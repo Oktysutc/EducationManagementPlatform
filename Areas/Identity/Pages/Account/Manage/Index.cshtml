@@ -2,123 +2,182 @@
 @model IndexModel
 
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = "Profil";
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<style>
-    body {
-        background-color: #f8f9fa;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .container {
-        margin-top: 50px;
-    }
-
-    .card {
-        border: none;
-        border-radius: 15px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-header {
-        background-color: #007bff;
-        color: white;
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
-        padding: 15px;
-        text-align: center;
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
-
-    .card-body {
-        padding: 30px;
-    }
-
-    .form-floating {
-        margin-bottom: 20px;
-    }
-
-    .form-control {
-        border: 1px solid #ced4da;
-        border-radius: 10px;
-        padding: 12px 15px;
-        font-size: 1rem;
-    }
-
-        .form-control:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background: #f0f0f0;
         }
 
-    .btn-primary {
-        background-color: #007bff;
-        border: none;
-        border-radius: 10px;
-        padding: 12px 20px;
-        font-size: 1rem;
-        font-weight: bold;
-        width: 100%;
-        margin-top: 20px;
-    }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
+        .login-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            padding: 40px;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            box-sizing: border-box;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
         }
 
-    .text-danger {
-        font-size: 0.875rem;
-    }
-</style>
+            .login-box h2 {
+                margin: 0 0 30px;
+                padding: 0;
+                color: #333;
+                text-align: center;
+            }
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">@ViewData["Title"]</div>
-                <div class="card-body">
-                    <form id="profile-form" method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                        <div class="form-floating">
-                            <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
-                            <label asp-for="Username" class="form-label">Username</label>
-                        </div>
-                        <div class="form-floating">
-                            <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number." />
-                            <label asp-for="Input.PhoneNumber" class="form-label">Phone Number</label>
-                            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-                        </div>
+            .login-box .user-box {
+                position: relative;
+            }
 
-                        <div class="form-floating">
-                            <input asp-for="Input.Faculty" class="form-control" placeholder="fakülte giriniz" />
-                            <label asp-for="Input.Faculty" class="form-label">Faculty</label>
-                            <span asp-validation-for="Input.Faculty" class="text-danger"></span>
-                        </div>
+                .login-box .user-box input {
+                    width: 100%;
+                    padding: 10px 0;
+                    font-size: 16px;
+                    color: #333;
+                    margin-bottom: 30px;
+                    border: none;
+                    border-bottom: 1px solid #333;
+                    outline: none;
+                    background: transparent;
+                }
 
-                        <div class="form-floating">
-                            <input asp-for="Input.Episode" class="form-control" placeholder="bölüm girin" />
-                            <label asp-for="Input.Episode" class="form-label">Episode</label>
-                            <span asp-validation-for="Input.Episode" class="text-danger"></span>
-                        </div>
+                .login-box .user-box label {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    padding: 10px 0;
+                    font-size: 16px;
+                    color: #333;
+                    pointer-events: none;
+                    transition: 0.5s;
+                }
 
+                .login-box .user-box input:focus ~ label,
+                .login-box .user-box input:valid ~ label {
+                    top: -20px;
+                    left: 0;
+                    color: #02b3d5;
+                    font-size: 12px;
+                }
 
+            .login-box form a {
+                position: relative;
+                display: inline-block;
+                padding: 10px 20px;
+                color: #02b3d5;
+                font-size: 16px;
+                text-decoration: none;
+                text-transform: uppercase;
+                overflow: hidden;
+                transition: 0.5s;
+                margin-top: 40px;
+                letter-spacing: 4px;
+            }
 
-                       
-                        <br />
-                        <a asp-controller="Account" asp-action="ChangePassword">Şifremi Değiştir</a>
+            .login-box a:hover {
+                background: #02b3d5;
+                color: #fff;
+                border-radius: 5px;
+                box-shadow: 0 0 5px #02b3d5, 0 0 25px #02b3d5, 0 0 50px #02b3d5, 0 0 100px #02b3d5;
+            }
 
-                        <br />
+            .login-box a span {
+                position: absolute;
+                display: block;
+            }
 
-                        <button id="update-profile-button" type="submit" class="btn btn-lg btn-primary">Save</button>
-                    </form>
-                </div>
+                .login-box a span:nth-child(1) {
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 2px;
+                    background: linear-gradient(90deg, transparent, #02b3d5);
+                    animation: btn-anim1 1s linear infinite;
+                }
+
+                .login-box a span:nth-child(2) {
+                    top: -100%;
+                    right: 0;
+                    width: 2px;
+                    height: 100%;
+                    background: linear-gradient(180deg, transparent, #02b3d5);
+                    animation: btn-anim2 1s linear infinite;
+                    animation-delay: 0.25s;
+                }
+
+                .login-box a span:nth-child(3) {
+                    bottom: 0;
+                    right: -100%;
+                    width: 100%;
+                    height: 2px;
+                    background: linear-gradient(270deg, transparent, #02b3d5);
+                    animation: btn-anim3 1s linear infinite;
+                    animation-delay: 0.5s;
+                }
+
+                .login-box a span:nth-child(4) {
+                    bottom: -100%;
+                    left: 0;
+                    width: 2px;
+                    height: 100%;
+                    background: linear-gradient(360deg, transparent, #02b3d5);
+                    animation: btn-anim4 1s linear infinite;
+                    animation-delay: 0.75s;
+                }
+
+        .footer {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>@ViewData["Title"]</h2>
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating">
+                <input asp-for="Username" class="form-control" placeholder="Lütfen kullanıcı adınızı seçin." disabled />
+                <label asp-for="Username" class="form-label">Kullanıcı Adı</label>
             </div>
-        </div>
+            <div class="form-floating">
+                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Telefon numaranızı girin." />
+                <label asp-for="Input.PhoneNumber" class="form-label">Telefon Numarası</label>
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.Faculty" class="form-control" placeholder="Fakültenizi girin." />
+                <label asp-for="Input.Faculty" class="form-label">Fakülte</label>
+                <span asp-validation-for="Input.Faculty" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.Episode" class="form-control" placeholder="Bölümünüzü girin." />
+                <label asp-for="Input.Episode" class="form-label">Bölüm</label>
+                <span asp-validation-for="Input.Episode" class="text-danger"></span>
+            </div>
+            <br />
+            <a asp-controller="Account" asp-action="ChangePassword">Şifremi Değiştir</a>
+            <br />
+            <button id="update-profile-button" type="submit" class="btn btn-lg btn-primary">Kaydet</button>
+        </form>
     </div>
-</div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,40 +1,34 @@
 ﻿@model List<CourseCategory>
 
 <div class="container mt-5">
-    <div class="row pb-3">
-        <div class="col">
-            <h1 class="text-center">Kurs Kategorileri</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <table class="table table-hover table-striped table-bordered">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Id</th>
-                        <th>Kategori Adı</th>
-                        <th>İşlemler</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var courseCategory in Model)
-                    {
-                        <tr>
-                            <td>@courseCategory.Id</td>
-                            <td>@courseCategory.Name</td>
-                            <td>
-                                <button class="btn btn-sm btn-warning" onclick="openUpdateModal('@courseCategory.Id')">Güncelle</button>
-                                <button class="btn btn-sm btn-danger" onclick="openDeleteModal('@courseCategory.Id')">Sil</button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="row pt-3">
-        <div class="col text-right">
-            <button class="btn btn-lg btn-primary" onclick="openAddModal()">Kurs Kategorisi Ekle</button>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 style="font-family:sans-serif; font-size:xx-large; font-style:unset; position:static;" class="text-center mb-4">Kurs Kategorileri</h1>   <hr />
+            <div class="row mb-3">
+                <div class="col text-right" style="display: flex; justify-content: center; align-items: center;">
+                    <button class="btn btn-lg btn-primary" style="padding: revert; " onclick="openAddModal()">Kategori Ekle</button>
+                </div>
+            </div>
+         
+
+            <div class="row">
+                @foreach (var courseCategory in Model)
+                {
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title" style="text-align: center; font-family: sans-serif;">@courseCategory.Name</h5>
+                                <p class="card-text" style="text-align: center; font-family: sans-serif;">ID: @courseCategory.Id</p>
+                                <div class="text-center">
+                                    <button class="btn btn-sm btn-warning mr-2" onclick="openUpdateModal('@courseCategory.Id')">Güncelle</button>
+                                    <button class="btn btn-sm btn-danger" onclick="openDeleteModal('@courseCategory.Id')">Sil</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
         </div>
     </div>
 </div>

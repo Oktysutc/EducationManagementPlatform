@@ -21,82 +21,53 @@
             </form>
         </div>
     </div>
-    @if (User.IsInRole(UserRoles.Role_Admin))
-    {
-        <div class="row">
-            <div align="center" valign="middle" class="col text-right">
-                <button align="center" valign="middle" class="btn btn-lg btn-primary" onclick="openAddModal()">Ekle</button>
-            </div>
-        </div>
-    }
-
-
-    <div class="row">
-        <div class="col">
-            <table class="table table-hover table-striped table-bordered">
-                <thead class="thead-dark">
-                    <tr>
-                        <th align="center" valign="middle"> </th>
-                        <br />
-                        <th align="center" valign="middle">Id</th>
-                       <br />
-                        <th align="center" valign="middle">Kurs Adı</th>
-                        <th align="center" valign="middle">Bilgi</th>
-                        <th align="center" valign="middle">Sahibi</th>
-                        <th align="center" valign="middle">Ücret</th>
-                        <th align="center" valign="middle">Zaman</th>
-                        <th align="center" valign="middle">Türü</th>
-                        <!--<th align="center" valign="middle">Video</th>-->
-                        <th align="center" valign="middle"></th>
-                        @if (User.IsInRole(UserRoles.Role_Admin))
-                        {
-                            <th></th>
-                            <th></th>
-                        }
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var course in Model)
-                    {
-                        <tr>
-                            <td align="center" valign="middle">
-                                <img src="@course.File" style="border-radius:7px solid #bbb9b9; max-width:145px; max:275px;" />
-                            </td>
-                          
-                            <td align="center" valign="middle">@course.Id</td>
-
-                            <td align="center" valign="middle">@course.CourseName</td>
-                            <td align="center" valign="middle">@course.Information</td>
-                            <td align="center" valign="middle">@course.Owner</td>
-                            <td align="center" valign="middle">@course.Price</td>
-                            <td align="center" valign="middle">@course.Time</td>
-                            <td align="center" valign="middle">@course.CourseCategory.Name</td>
-                            <!--<td align="center" valign="middle">
-                                <iframe width="150" height="100" src="@course.VideoUrl" frameborder="0" allowfullscreen></iframe>
-                            </td>-->
-                            <td align="center" valign="middle">
-                                <a href="@Url.Action("Detail", "Course", new { id = course.Id })" class="btn btn-sm btn-info">Detay</a>
-                            </td>
-
-                            @if (User.IsInRole(UserRoles.Role_Admin))
-                            {
-                                <td align="center" valign="middle">
-                                    <button class="btn btn-sm btn-warning" onclick="openUpdateModal('@course.Id')">Güncelle</button>
-                                </td>
-                                <td align="center" valign="middle">
-                                    <button class="btn btn-sm btn-danger" onclick="openDeleteModal('@course.Id')">Sil</button>
-                                </td>
-                            }
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
 
     
-</div>
 
+    <!-- Kurs kartları -->
+    <div class="row">
+        @foreach (var course in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4"> <!-- Küçültülen boyutlar burada -->
+                <div class="card h-100"> <!-- Kartların aynı yükseklikte olması için h-100 sınıfı eklendi -->
+                    <img src="@course.File" class="card-img-top" alt="Kurs Resmi">
+                    <div class="card-body">
+                        <h5 class="card-title">@course.CourseName</h5>
+                        <p class="card-text">@course.Information</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Id:</strong> @course.Id</li>
+                            <li class="list-group-item"><strong>Sahibi:</strong> @course.Owner</li>
+                            @if (User.IsInRole(UserRoles.Role_User))
+                            {
+                            <li class="list-group-item"><strong>Ücret:</strong> @course.Price</li>
+                            }
+                            <li class="list-group-item"><strong>Zaman:</strong> @course.Time</li>
+                            <li class="list-group-item"><strong>Türü:</strong> @course.CourseCategory.Name</li>
+                        </ul>
+                        <a href="@Url.Action("Detail", "Course", new { id = course.Id })" class="btn btn-info mt-2">Detay</a>
+
+                        <!-- Admin için düzenle ve sil butonları -->
+                        @if (User.IsInRole(UserRoles.Role_Admin))
+                        {
+                            <div class="d-flex justify-content-between mt-3">
+                                <button class="btn btn-warning btn-sm" onclick="openUpdateModal('@course.Id')">Güncelle</button>
+                                <button class="btn btn-danger btn-sm" onclick="openDeleteModal('@course.Id')">Sil</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div><!-- Ekle butonu (sadece admin için) -->
+@if (User.IsInRole(UserRoles.Role_Admin))
+{
+    <div class="row">
+        <div class="col text-right">
+            <button class="btn btn-lg btn-primary" onclick="openAddModal()">Ekle</button>
+        </div>
+    </div>
+}
 <!-- Add Modal -->
 <div id="addModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -121,7 +92,7 @@
                                 <option value="@category.Value">@category.Text</option>
                             }
                         </select>
-                    </div>  
+                    </div>
                     <div class="form-group">
                         <label for="addInformation">Bilgi</label>
                         <textarea class="form-control" id="addInformation" name="Information" required></textarea>

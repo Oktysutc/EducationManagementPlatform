@@ -16,26 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         /* CSS stillerinizi buraya ekleyin */
-        .search-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-            .search-container .input-group {
-                width: 100%;
-                width: 1200px;
-            }
-
-            .search-container .form-control {
-                height: 55px;
-                font-size: 18px;
-            }
-
-            .search-container .btn {
-                height: 55px;
-                font-size: 18px;
-            }
+        
 
         .card-with-image {
             position: relative;
@@ -83,73 +64,177 @@
             }
 
 
+           
+            .search-input:focus {
+                border-color: #273e4d;
+                box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
+            }
+
+            .search-button:hover {
+                background-color: #273e4d;
+            }
+ 
+
 
     </style>
 </head>
 <body>
     <div class="container text-center mt-5 home-page">
-        <h1 class="display-4">Eğitim Yönetim Platformu</h1>
-        <p class="lead mt-3 mb-5">Hoş geldiniz! Eğitimde yeni bir döneme adım atın.</p>
+        <h1 style="font-family:sans-serif; font-size:xx-large; font-weight:bold;" class="display-4">Eğitim Yönetim Platformu</h1>
+<hr />
 
-        <div class="search-container">
-            <form asp-controller="Course" asp-action="Index" method="get" class="form-inline">
-                <div class="input-group">
-                    <input type="text" name="searchQuery" class="form-control" placeholder="Kurs Ara..." />
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-primary">Ara</button>
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="search-container mt-3 mb-3">
+                        <form asp-controller="Course" asp-action="Index" method="get" class="form-inline">
+                            <div class="input-group w-100">
+                                <input type="text" name="searchQuery" class="form-control search-input"
+                                       placeholder="Kurs Ara..."
+                                       style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; padding: 10px 20px; border: 1px solid #ced4da; outline: none; transition: all 0.3s ease-in-out;">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary search-button"
+                                            style="border-top-right-radius: 10px; border-bottom-right-radius: 10px; padding: 10px 20px; border: 1px solid #ced4da; background-color: #273e4d; color: #fff; transition: all 0.3s ease-in-out;">
+                                        Ara
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </form>
-        </div>
-
-        <div class="row justify-content-center mb-5">
-            <div class="col-md-8">
-                <img src="~/img/main.jpg" class="img-fluid rounded shadow" alt="Ana Görsel">
             </div>
         </div>
+
+
+
+        
+        <div class="container" style="background-color:#273e4d; border-radius:20px; padding-top: 20px; padding-bottom: 20px; height: 345px; ">
+            <div class="row mb-5">
+                <div class="col-md-3">
+                    <div class="mb-3 d-flex align-items-center">
+                        <img src="~/img/logo1.webp" class="logo" alt="Logo 1" style="max-width: 50px; max-height: 50px; margin-right: 10px; border-radius: 5px;">
+                        <a href="#link1" class="d-block">programlama dünyası</a>
+                    </div>
+
+                    <div class="mb-3 d-flex align-items-center">
+                        <img src="~/img/sunucu.webp" class="logo" alt="Logo 1" style="max-width: 50px; max-height: 50px; margin-right: 10px; border-radius: 5px;">
+                        <a href="#link1" class="d-block">sunucu dünyası</a>
+                    </div>
+                    <div class="mb-3 d-flex align-items-center">
+                        <img src="~/img/ağ.webp" class="logo" alt="Logo 2" style="max-width: 50px; max-height: 50px; margin-right: 10px; border-radius: 5px;">
+                        <a href="#link2" class="d-block">Sistem dünyası</a>
+                    </div>
+                    <div class="mb-3 d-flex align-items-center">
+                        <img src="~/img/ingilizce.webp" class="logo" alt="Logo 3" style="max-width: 50px; max-height: 50px; margin-right: 10px; border-radius: 5px;">
+                        <a href="#link3" class="d-block">Kişisel gelişim</a>
+                    </div>
+                    <div class="mb-3 d-flex align-items-center">
+                        <img src="~/img/design.webp" class="logo" alt="Logo 4" style="max-width: 50px; max-height: 50px; margin-right: 10px; border-radius: 5px;">
+                        <a href="#link4" class="d-block">Tasarım dünyası</a>
+                    </div>
+                    <div class="mb-3 d-flex align-items-center">
+                        <img src="~/img/mobill.webp" class="logo" alt="Logo 5" style="max-width: 50px; max-height: 50px; margin-right: 10px; border-radius: 5px;">
+                        <a href="#link5" class="d-block">Uygulama geliştirme</a>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="d-flex justify-content-end">
+                        <img src="~/img/home1.jpg" class="img-fluid rounded shadow" alt="Ana Görsel" style="max-width: 500px; max-height: 330px; border-radius: 7px; margin: 15px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
 
         @if (SignInManager.IsSignedIn(User))
         {
             @if (User.IsInRole(UserRoles.Role_Admin))
             {
+
+
+
                 <div class="row text-center">
-                    <div class="col-md-4 mb-4">
+
+
+
+                    <div class="col-md-5 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "CourseCategory")'">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%;" src="~/img/programlama.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                        </div>
                         <div class="card h-100 shadow-sm">
                             <div class="card-body">
                                 <h5 class="card-title">Kategoriler</h5>
-                                <p class="card-text">Kategorilere göz atın.</p>
-                                <a asp-controller="CourseCategory" asp-action="Index" class="btn btn-primary">Kategorilere gidin</a>
+                                <p class="card-text">kategorilere göz atın..</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-4">
+                 
+
+
+                    <div class="col-md-5 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course")'">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%;" src="~/img/web.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                        </div>
                         <div class="card h-100 shadow-sm">
                             <div class="card-body">
-                                <h5 class="card-title">Kurslar</h5>
-                                <p class="card-text">Kurslarımıza detaylıca göz atın.</p>
-                                <a asp-controller="Course" asp-action="Index" class="btn btn-primary">Kursları gör</a>
+                                <h5 class="card-title">kurslar</h5>
+                                <p class="card-text"> kurslarıma göz atın..</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-4">
+
+
+
+                    
+
+                    <div class="col-md-5 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Buy")'">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%;" src="~/img/design.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                        </div>
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Alışveriş</h5>
+                                <p class="card-text">Alışveriş yapın...</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    
+                    <div class="col-md-5 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("SendEmail", "Contact")'">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%;" src="~/img/ağ.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                        </div>
                         <div class="card h-100 shadow-sm">
                             <div class="card-body">
                                 <h5 class="card-title">İletişim</h5>
-                                <p class="card-text">Her türlü soru ve önerileriniz için bizimle iletişime geçin.</p>
-                                <a asp-controller="Contact" asp-action="Index" class="btn btn-primary">İletişime Geç</a>
+                                <p class="card-text">Mail göndermek için tıklayın!</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title">Satın Al</h5>
-                                <p class="card-text">Hemen satın almak için tıklayınız.</p>
-                                <a asp-controller="Buy" asp-action="Index" class="btn btn-primary">Satın Al</a>
-                            </div>
-                        </div>
-                    </div>
+
+
+                
+
+
+
+
+
+
                 </div>
+
+
+
+
+
+
             }
         }
         else
@@ -162,6 +247,8 @@
     {
         @if (User.IsInRole(UserRoles.Role_User))
         {
+            <h2 style="font-family:sans-serif;">POPÜLER KATEGORİLER</h2>
+<hr />
             <div>
                 <div class="row text-center">
                     <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "Programlama" })'">

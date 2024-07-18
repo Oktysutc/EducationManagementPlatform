@@ -20,11 +20,16 @@ namespace EducationManagementPlatform.Controllers
         }
 
         // [Authorize(Roles = "Admin,User")]
-        public IActionResult Index(string category)
+        public IActionResult Index(string category, string searchQuery)
         {
             List<Course> objCourseList;
 
-            if (string.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                objCourseList = _courseRepository.GetAll(includeProps: "CourseCategory")
+                    .Where(c => c.CourseName.Contains(searchQuery)).ToList();
+            }
+            else if (string.IsNullOrEmpty(category))
             {
                 objCourseList = _courseRepository.GetAll(includeProps: "CourseCategory").ToList();
             }

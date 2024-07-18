@@ -1,41 +1,34 @@
-﻿using EducationManagementPlatform.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using EducationManagementPlatform.Services;
+using EducationManagementPlatform.ViewModels;
 
-namespace EducationManagementPlatform.Controllers
+public class ContactController : Controller
 {
-    public class ContactController : Controller
+    private readonly IEmailService _emailService;
+
+    public ContactController(IEmailService emailService)
     {
-        private readonly IEmailService _emailService;
+        _emailService = emailService;
+    }
 
-        public ContactController(IEmailService emailService)
+    [HttpGet]
+    public IActionResult SendEmail()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> SendEmail(ContactViewModel model)
+    {
+        if (ModelState.IsValid)
         {
-            _emailService = emailService;
+            string subject = "New Message from Contact Form";
+            string message = $"{model.Name} ({model.Email}) sent you a message: {model.Message}";
+            await _emailService.SendEmailAsync("oktaysutcu50@gmail.com", subject, message);
+
+            ViewBag.Message = "mesajınız gönderildi!";
         }
 
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Send(ContactFormModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var emailMessage = new EmailMessage
-                {
-                    To = "oktaysutcu50@gmail.com",
-                    Subject = "New contact form submission",
-                    Body = $"Name: {model.Name}\nEmail: {model.Email}\nMessage: {model.Message}"
-                };
-
-                _emailService.SendEmail(emailMessage);
-
-                return RedirectToAction("Index");
-            }
-
-            return View("Index", model);
-        }
+        return View(model);
     }
 }

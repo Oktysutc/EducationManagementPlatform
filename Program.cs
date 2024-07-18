@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using EducationManagementPlatform.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +30,7 @@ builder.Services.AddScoped<IBuyRepository, BuyRepository>();
 
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 //builder.Services.AddScoped<ICourseInfoRepository, CourseInfoRepository>();
-builder.Services.AddScoped<FeedbackController,  FeedbackController>();
+builder.Services.AddScoped<FeedbackController, FeedbackController>();
 
 // Add email service configuration
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
