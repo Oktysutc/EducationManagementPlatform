@@ -3,7 +3,7 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h1 style="font-family:sans-serif; font-size:xx-large; font-style:unset; position:static;" class="text-center mb-4">Kurs Kategorileri</h1>   <hr />
+            <h1 style="font-family:sans-serif; font-weight:bold;  position:static;" class="text-center mb-4">Kurs Kategorileri</h1>   <hr />
             <div class="row mb-3">
                 <div class="col text-right" style="display: flex; justify-content: center; align-items: center;">
                     <button class="btn btn-lg btn-primary" style="padding: revert; " onclick="openAddModal()">Kategori Ekle</button>
@@ -15,12 +15,12 @@
                 @foreach (var courseCategory in Model)
                 {
                     <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card h-100">
-                            <div class="card-body">
+                        <div class="card h-100" >
+                            <div class="card-body" style="background-color:#273e4d; border-radius:15px; color: white; font-family: sans-serif; font-weight: bold;">
                                 <h5 class="card-title" style="text-align: center; font-family: sans-serif;">@courseCategory.Name</h5>
                                 <p class="card-text" style="text-align: center; font-family: sans-serif;">ID: @courseCategory.Id</p>
                                 <div class="text-center">
-                                    <button class="btn btn-sm btn-warning mr-2" onclick="openUpdateModal('@courseCategory.Id')">Güncelle</button>
+                                    <button style="background-color:#4383aa; color:white; border-radius:10px;" onclick="openUpdateModal('@courseCategory.Id')">Güncelle</button>
                                     <button class="btn btn-sm btn-danger" onclick="openDeleteModal('@courseCategory.Id')">Sil</button>
                                 </div>
                             </div>

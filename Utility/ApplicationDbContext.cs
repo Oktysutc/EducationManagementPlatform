@@ -13,10 +13,22 @@ namespace EducationManagementPlatform.Utility
         public DbSet<CourseCategory> CourseCategories { get; set; }//kurs kategori
         public DbSet<Course> Courses { get; set; }//kurs
         public DbSet<Buy> Buys { get; set; }//satın alma işlemleri
-        //public DbSet<Rent> Rents { get; set; }
+       
         public DbSet<AppUser> AppUsers { get; set; }// kullanıcı işlemleri
-       // public DbSet<CourseInfo> Coursesing { get; set; }//kurs
-      
+       
+       public DbSet<Purchase> Purchases { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Price property için store type belirleyin
+            modelBuilder.Entity<Purchase>()
+                .Property(p => p.Price)
+                .HasColumnType("decimal(18,2)");
+
+            // Diğer yapılandırmalar...
+        }
+
 
 
     }

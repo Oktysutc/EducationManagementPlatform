@@ -8,19 +8,27 @@
         </div>
     </div>
 
-    <!-- Arama formu -->
-    <div class="row pb-3 justify-content-end">
-        <div class="col-auto">
-            <form asp-controller="Course" asp-action="Index" method="get" class="form-inline">
-                <div class="input-group">
-                    <input type="text" name="searchQuery" class="form-control form-control-sm" placeholder="Kurs Ara..." />
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-primary btn-sm">Ara</button>
+     <div class="container">
+            <div class="row justify-content-end">
+                <div class="col-md-8">
+                    <div class="search-container mt-3 mb-3">
+                        <form asp-controller="Course" asp-action="Index" method="get" class="form-inline">
+                            <div class="input-group w-100">
+                                <input type="text" name="searchQuery" class="form-control search-input"
+                                       placeholder="Kurs Ara..."
+                                       style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; padding: 10px 20px; border: 1px solid #ced4da; outline: none; transition: all 0.3s ease-in-out;">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary search-button"
+                                            style="border-top-right-radius: 10px; border-bottom-right-radius: 10px; padding: 10px 20px; border: 1px solid #ced4da; background-color: #273e4d; color: #fff; transition: all 0.3s ease-in-out;">
+                                        Ara
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
 
     
 
@@ -32,10 +40,12 @@
                 <div class="card h-100"> <!-- Kartların aynı yükseklikte olması için h-100 sınıfı eklendi -->
                     <img src="@course.File" class="card-img-top" alt="Kurs Resmi">
                     <div class="card-body">
-                        <h5 class="card-title">@course.CourseName</h5>
-                        <p class="card-text">@course.Information</p>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Id:</strong> @course.Id</li>
+                        <h5 class="card-title" style="font-family:sans-serif; font-weight:bold;font-size:large;  text-align:center;">@course.CourseName</h5>
+                        <p style="text-align:center;" class="card-text">@course.Information</p>
+                        <ul class="list-group list-group-flush" style="text-align:center; font-family:sans-serif;">
+                            @if (User.IsInRole(UserRoles.Role_Admin))
+                        {
+                            <li class="list-group-item"><strong>Id:</strong> @course.Id</li>}
                             <li class="list-group-item"><strong>Sahibi:</strong> @course.Owner</li>
                             @if (User.IsInRole(UserRoles.Role_User))
                             {
@@ -44,7 +54,8 @@
                             <li class="list-group-item"><strong>Zaman:</strong> @course.Time</li>
                             <li class="list-group-item"><strong>Türü:</strong> @course.CourseCategory.Name</li>
                         </ul>
-                        <a href="@Url.Action("Detail", "Course", new { id = course.Id })" class="btn btn-info mt-2">Detay</a>
+                        <a href="@Url.Action("Detail", "Course", new { id = course.Id })" class="btn btn-info mt-2 d-block mx-auto" style="width: fit-content;">Detay</a>
+
 
                         <!-- Admin için düzenle ve sil butonları -->
                         @if (User.IsInRole(UserRoles.Role_Admin))

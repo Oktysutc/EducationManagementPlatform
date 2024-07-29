@@ -1,0 +1,23 @@
+﻿@model IEnumerable<SalesViewModel>
+
+<h2>Satışlar</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Kurs Resmi</th>
+            <th>Kurs Adı</th>
+            <th>Alicı</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sale in Model)
+        {
+            <tr>
+                <td><img src="@sale.CourseImage" alt="@sale.CourseName" style="max-width: 100px;" /></td>
+                <td>@sale.CourseName</td>
+                <td>@sale.Purchaser</td>
+            </tr>
+        }
+    </tbody>
+</table>

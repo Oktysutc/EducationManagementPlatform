@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         /* CSS stillerinizi buraya ekleyin */
-        
+
 
         .card-with-image {
             position: relative;
@@ -64,24 +64,22 @@
             }
 
 
-           
-            .search-input:focus {
-                border-color: #273e4d;
-                box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
-            }
 
-            .search-button:hover {
-                background-color: #273e4d;
-            }
- 
+        .search-input:focus {
+            border-color: #273e4d;
+            box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
+        }
 
+        .search-button:hover {
+            background-color: #273e4d;
+        }
 
     </style>
 </head>
 <body>
     <div class="container text-center mt-5 home-page">
         <h1 style="font-family:sans-serif; font-size:xx-large; font-weight:bold;" class="display-4">Eğitim Yönetim Platformu</h1>
-<hr />
+        <hr />
 
 
         <div class="container">
@@ -108,39 +106,38 @@
 
 
 
-        
-        <div class="container" style="background-color:#273e4d; border-radius:20px; padding-top: 20px; padding-bottom: 20px; height: 345px; ">
+
+        <div class="container" style="background-color:#273e4d; border-radius:20px; padding-top: 20px; padding-bottom: 20px; min-height: 345px;">
             <div class="row mb-5">
                 <div class="col-md-3">
                     <div class="mb-3 d-flex align-items-center">
                         <img src="~/img/logo1.webp" class="logo" alt="Logo 1" style="max-width: 50px; max-height: 50px; margin-right: 10px; border-radius: 5px;">
-                        <a href="#link1" class="d-block">programlama dünyası</a>
+                        <a href="@Url.Action("Index", "Course", new { category = "programlama" })" class="d-block" style="color: white; font-family: sans-serif; font-weight: bold;">programlama dünyası</a>
                     </div>
-
                     <div class="mb-3 d-flex align-items-center">
                         <img src="~/img/sunucu.webp" class="logo" alt="Logo 1" style="max-width: 50px; max-height: 50px; margin-right: 10px; border-radius: 5px;">
-                        <a href="#link1" class="d-block">sunucu dünyası</a>
+                        <a href="@Url.Action("Index", "Course", new { category = "sunucu" })" class="d-block" style="color: white; font-family: sans-serif; font-weight: bold;">sunucu dünyası</a>
                     </div>
                     <div class="mb-3 d-flex align-items-center">
                         <img src="~/img/ağ.webp" class="logo" alt="Logo 2" style="max-width: 50px; max-height: 50px; margin-right: 10px; border-radius: 5px;">
-                        <a href="#link2" class="d-block">Sistem dünyası</a>
+                        <a href="@Url.Action("Index", "Course", new { category = "ağ" })" class="d-block" style="color: white; font-family: sans-serif; font-weight: bold;">Sistem dünyası</a>
                     </div>
                     <div class="mb-3 d-flex align-items-center">
                         <img src="~/img/ingilizce.webp" class="logo" alt="Logo 3" style="max-width: 50px; max-height: 50px; margin-right: 10px; border-radius: 5px;">
-                        <a href="#link3" class="d-block">Kişisel gelişim</a>
+                        <a href="@Url.Action("Index", "Course", new { category = "dil" })" class="d-block" style="color: white; font-family: sans-serif; font-weight: bold;">Kişisel gelişim</a>
                     </div>
                     <div class="mb-3 d-flex align-items-center">
                         <img src="~/img/design.webp" class="logo" alt="Logo 4" style="max-width: 50px; max-height: 50px; margin-right: 10px; border-radius: 5px;">
-                        <a href="#link4" class="d-block">Tasarım dünyası</a>
+                        <a href="@Url.Action("Index", "Course", new { category = "tasarım" })" class="d-block" style="color: white; font-family: sans-serif; font-weight: bold;">Tasarım dünyası</a>
                     </div>
                     <div class="mb-3 d-flex align-items-center">
                         <img src="~/img/mobill.webp" class="logo" alt="Logo 5" style="max-width: 50px; max-height: 50px; margin-right: 10px; border-radius: 5px;">
-                        <a href="#link5" class="d-block">Uygulama geliştirme</a>
+                        <a href="@Url.Action("Index", "Course", new { category = "mobil" })" class="d-block" style="color: white; font-family: sans-serif; font-weight: bold;">Uygulama geliştirme</a>
                     </div>
                 </div>
-                <div class="col-md-9">
-                    <div class="d-flex justify-content-end">
-                        <img src="~/img/home1.jpg" class="img-fluid rounded shadow" alt="Ana Görsel" style="max-width: 500px; max-height: 330px; border-radius: 7px; margin: 15px;">
+                <div class="col-md-9" style="position: relative;">
+                    <div class="image-wrapper" style="overflow: hidden; border-radius: 7px;">
+                        <img src="~/img/home1.jpg" class="img-fluid rounded shadow" alt="Ana Görsel" style="width: 100%; height: auto; max-height: 330px; border-radius: 7px;">
                     </div>
                 </div>
             </div>
@@ -152,94 +149,71 @@
 
 
 
+
         @if (SignInManager.IsSignedIn(User))
         {
             @if (User.IsInRole(UserRoles.Role_Admin))
             {
-
-
-
-                <div class="row text-center">
-
-
-
-                    <div class="col-md-5 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "CourseCategory")'">
+                <div class="row justify-content-between">
+                    <div class="col-md-5 mb-5 card-with-image" style="height: 250px; margin-left: 0; margin-top: 20px;">
                         <div class="background-image">
-                            <img style="height:100%; width:100%;" src="~/img/programlama.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                            <img style="height:100%; width:100%; border-radius: 30px;" src="~/img/programlama.webp" class="img-fluid rounded shadow" alt="Ana Görsel" onclick="location.href = '@Url.Action("Index", "CourseCategory")'">
                         </div>
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body">
+                        <div class="card h-100 shadow-sm" style="border-radius: 30px;" onclick="location.href = '@Url.Action("Index", "CourseCategory")'">
+                            <div class="card-body d-flex flex-column justify-content-center">
                                 <h5 class="card-title">Kategoriler</h5>
-                                <p class="card-text">kategorilere göz atın..</p>
-                            </div>
-                        </div>
-                    </div>
-                 
-
-
-                    <div class="col-md-5 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course")'">
-                        <div class="background-image">
-                            <img style="height:100%; width:100%;" src="~/img/web.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
-                        </div>
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title">kurslar</h5>
-                                <p class="card-text"> kurslarıma göz atın..</p>
+                                <p class="card-text">Kategorilere göz atın..</p>
                             </div>
                         </div>
                     </div>
 
-
-
-                    
-
-                    <div class="col-md-5 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Buy")'">
+                    <div class="col-md-5 mb-5 card-with-image" style="height: 250px; margin-right: 0; margin-top: 20px;">
                         <div class="background-image">
-                            <img style="height:100%; width:100%;" src="~/img/design.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                            <img style="height:100%; width:100%; border-radius: 30px;" src="~/img/web.webp" class="img-fluid rounded shadow" alt="Ana Görsel" onclick="location.href = '@Url.Action("Index", "Course")'">
                         </div>
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body">
+                        <div class="card h-100 shadow-sm" style="border-radius: 30px;" onclick="location.href = '@Url.Action("Index", "Course")'">
+                            <div class="card-body d-flex flex-column justify-content-center">
+                                <h5 class="card-title">Kurslar</h5>
+                                <p class="card-text">Kurslarıma göz atın..</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-between mt-3">
+                    <div class="col-md-5 mb-5 card-with-image" style="height: 250px; margin-left: 0; margin-top: 20px;">
+                        <div class="background-image">
+                            <img style="height:100%; width:100%; border-radius: 30px;" src="~/img/sepet.webp" class="img-fluid rounded shadow" alt="Ana Görsel" onclick="location.href = '@Url.Action("Index", "Buy")'">
+                        </div>
+                        <div class="card h-100 shadow-sm" style="border-radius: 30px;" onclick="location.href = '@Url.Action("Index", "Buy")'">
+                            <div class="card-body d-flex flex-column justify-content-center">
                                 <h5 class="card-title">Alışveriş</h5>
                                 <p class="card-text">Alışveriş yapın...</p>
                             </div>
                         </div>
                     </div>
 
-
-
-                    
-                    <div class="col-md-5 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("SendEmail", "Contact")'">
+                    <div class="col-md-5 mb-5 card-with-image" style="height: 250px; margin-right: 0; margin-top: 20px;">
                         <div class="background-image">
-                            <img style="height:100%; width:100%;" src="~/img/ağ.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                            <img style="height:100%; width:100%; border-radius: 30px;" src="~/img/ağ.webp" class="img-fluid rounded shadow" alt="Ana Görsel" onclick="location.href = '@Url.Action("SendEmail", "Contact")'">
                         </div>
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body">
+                        <div class="card h-100 shadow-sm" style="border-radius: 30px;">
+                            <div class="card-body d-flex flex-column justify-content-center">
                                 <h5 class="card-title">İletişim</h5>
                                 <p class="card-text">Mail göndermek için tıklayın!</p>
                             </div>
                         </div>
                     </div>
-
-
-                
-
-
-
-
-
-
                 </div>
-
-
-
-
-
-
             }
+
+
+
+
         }
         else
         {
-            <p>Uygulamaya giriş yapın.</p>
+            <p style="font-weight:bold; text-align:center; margin:20px; font-family:sans-serif;">Uygulamaya giriş yapın.</p>
         }
     </div>
 
@@ -247,15 +221,15 @@
     {
         @if (User.IsInRole(UserRoles.Role_User))
         {
-            <h2 style="font-family:sans-serif;">POPÜLER KATEGORİLER</h2>
-<hr />
+            <h2 style="font-weight:bold; text-align:center; margin:20px;">POPÜLER KATEGORİLER</h2>
+            <hr />
             <div>
                 <div class="row text-center">
-                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "Programlama" })'">
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px; margin:20px; border-radius:20px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "Programlama" })'">
                         <div class="background-image">
-                            <img style="height:100%; width:100%;" src="~/img/programlama.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                            <img style="height:100%; width:100%; border-radius:20px;" src="~/img/programlama.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
                         </div>
-                        <div class="card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm" style="border-radius:20px;">
                             <div class="card-body">
                                 <h5 class="card-title">Programlama</h5>
                                 <p class="card-text">Programlama kategorisindeki kurslarıma göz atın..</p>
@@ -265,11 +239,11 @@
                     <br />
 
 
-                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "web" })'">
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;border-radius:20px;  margin:20px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "web" })'">
                         <div class="background-image">
-                            <img style="height:100%; width:100%;" src="~/img/web.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                            <img style="height:100%; width:100%;border-radius:20px; " src="~/img/web.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
                         </div>
-                        <div class="card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm" style="border-radius=20px;">
                             <div class="card-body">
                                 <h5 class="card-title">Web</h5>
                                 <p class="card-text">Web kategorisindeki kurslarıma göz atın..</p>
@@ -281,11 +255,11 @@
 
                     <br />
 
-                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "tasarım" })'">
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;border-radius:20px;  margin:20px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "tasarım" })'">
                         <div class="background-image">
-                            <img style="height:100%; width:100%;" src="~/img/design.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                            <img style="height:100%; width:100%;border-radius:20px; " src="~/img/design.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
                         </div>
-                        <div class="card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm" style="border-radius=20px;">
                             <div class="card-body">
                                 <h5 class="card-title">Tasarım</h5>
                                 <p class="card-text">Tasarım kategorisindeki kurslarıma göz atın..</p>
@@ -297,11 +271,11 @@
 
                     <br />
 
-                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "ağ" })'">
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;border-radius:20px;  margin:20px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "ağ" })'">
                         <div class="background-image">
-                            <img style="height:100%; width:100%;" src="~/img/ağ.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                            <img style="height:100%; width:100%;border-radius:20px; " src="~/img/ağ.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
                         </div>
-                        <div class="card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm" style="border-radius=20px;">
                             <div class="card-body">
                                 <h5 class="card-title">Ağ</h5>
                                 <p class="card-text">Ağ kategorisindeki kurslarıma göz atın..</p>
@@ -313,11 +287,11 @@
                     <br />
 
 
-                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "dil" })'">
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;border-radius:20px;  margin:20px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "dil" })'">
                         <div class="background-image">
-                            <img style="height:100%; width:100%;" src="~/img/dil.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                            <img style="height:100%; width:100%;border-radius:20px; " src="~/img/dil.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
                         </div>
-                        <div class="card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm" style="border-radius=20px;">
                             <div class="card-body">
                                 <h5 class="card-title">Dil</h5>
                                 <p class="card-text">Dil kategorisindeki kurslarıma göz atın..</p>
@@ -329,11 +303,11 @@
                     <br />
 
 
-                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "oyun" })'">
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;border-radius:20px;  margin:20px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "oyun" })'">
                         <div class="background-image">
-                            <img style="height:100%; width:100%;" src="~/img/oyun.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                            <img style="height:100%; width:100%;border-radius:20px; " src="~/img/oyun.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
                         </div>
-                        <div class="card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm" style="border-radius=20px;">
                             <div class="card-body">
                                 <h5 class="card-title">oyun</h5>
                                 <p class="card-text">oyun kategorisindeki kurslarıma göz atın..</p>
@@ -346,11 +320,11 @@
 
 
 
-                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "masaüstü" })'">
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;border-radius:20px;  margin:20px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "masaüstü" })'">
                         <div class="background-image">
-                            <img style="height:100%; width:100%;" src="~/img/masaüstüü.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                            <img style="height:100%; width:100%;border-radius:20px; " src="~/img/masaüstüü.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
                         </div>
-                        <div class="card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm" style="border-radius=20px;">
                             <div class="card-body">
                                 <h5 class="card-title">Masaüstü</h5>
                                 <p class="card-text">Masaüstü kategorisindeki kurslarıma göz atın...</p>
@@ -359,11 +333,11 @@
                     </div>
 
                     <br />
-                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "gömülü" })'">
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px; border-radius:20px; margin:20px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "gömülü" })'">
                         <div class="background-image">
-                            <img style="height:100%; width:100%;" src="~/img/Gömülüü.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                            <img style="height:100%; width:100%;border-radius:20px; " src="~/img/Gömülüü.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
                         </div>
-                        <div class="card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm" style="border-radius=20px;">
                             <div class="card-body">
                                 <h5 class="card-title">Gömülü</h5>
                                 <p class="card-text">Gömülü kategorisindeki kurslarıma göz atın...</p>
@@ -373,11 +347,11 @@
 
                     <br />
 
-                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "sunucu" })'">
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;border-radius:20px;  margin:20px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "sunucu" })'">
                         <div class="background-image">
-                            <img style="height:100%; width:100%;" src="~/img/sunucuu.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                            <img style="height:100%; width:100%;border-radius:20px; " src="~/img/sunucuu.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
                         </div>
-                        <div class="card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm" style="border-radius=20px;">
                             <div class="card-body">
                                 <h5 class="card-title">sunucu</h5>
                                 <p class="card-text">sunucu kategorisindeki kurslarıma göz atın...</p>
@@ -386,11 +360,11 @@
                     </div>
                     <br />
 
-                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "veri tabanı" })'">
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;border-radius:20px;  margin:20px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "veri tabanı" })'">
                         <div class="background-image">
-                            <img style="height:100%; width:100%;" src="~/img/veritabanıı.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                            <img style="height:100%; width:100%;border-radius:20px; " src="~/img/veritabanıı.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
                         </div>
-                        <div class="card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm" style="border-radius=20px;">
                             <div class="card-body">
                                 <h5 class="card-title">veritabanı</h5>
                                 <p class="card-text">veritabanı kategorisindeki kurslarıma göz atın...</p>
@@ -398,11 +372,11 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "mobil" })'">
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;border-radius:20px;  margin:20px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "mobil" })'">
                         <div class="background-image">
-                            <img style="height:100%; width:100%;" src="~/img/mobill.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                            <img style="height:100%; width:100%;border-radius:20px; " src="~/img/mobill.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
                         </div>
-                        <div class="card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm" style="border-radius=20px;">
                             <div class="card-body">
                                 <h5 class="card-title">mobil</h5>
                                 <p class="card-text">mobil kategorisindeki kurslarıma göz atın...</p>
@@ -410,11 +384,11 @@
                         </div>
                     </div>
                     <br />
-                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "backend" })'">
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;border-radius:20px;  margin:20px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "backend" })'">
                         <div class="background-image">
-                            <img style="height:100%; width:100%;" src="~/img/backendd.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                            <img style="height:100%; width:100%;border-radius:20px; " src="~/img/backendd.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
                         </div>
-                        <div class="card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm" style="border-radius=20px;">
                             <div class="card-body">
                                 <h5 class="card-title">backend</h5>
                                 <p class="card-text">backend kategorisindeki kurslarıma göz atın...</p>
@@ -422,11 +396,11 @@
                         </div>
                     </div>
                     <br />
-                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "frontend" })'">
+                    <div class="col-md-3 mb-5 card-with-image" style=" height:170px; border-radius:20px; margin:20px;" onclick="location.href = '@Url.Action("Index", "Course", new { category = "frontend" })'">
                         <div class="background-image">
-                            <img style="height:100%; width:100%;" src="~/img/frontendd.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
+                            <img style="height:100%; width:100%;border-radius:20px; " src="~/img/frontendd.webp" class="img-fluid rounded shadow" alt="Ana Görsel">
                         </div>
-                        <div class="card h-100 shadow-sm">
+                        <div class="card h-100 shadow-sm" style="border-radius=20px;">
                             <div class="card-body">
                                 <h5 class="card-title">frontend</h5>
                                 <p class="card-text">frontend kategorisindeki kurslarıma göz atın...</p>
@@ -439,7 +413,7 @@
 
 
 
-                    
+
                 </div>
             </div>
         }
@@ -448,10 +422,18 @@
     {
         <p>Detaylı özellikleri keşfetmek için uygulamaya giriş yapın.</p>
     }
+
+
+
     @section Scripts {
         @{
             await Html.RenderPartialAsync("_ValidationScriptsPartial");
         }
     }
+    <footer style="background-color: #273e4d; margin:0; left:0; color: white; text-align: center; padding: 10px 0; position: absolute; bottom: 0; width: 100%; font-family: sans-serif; font-weight: bold;">
+        <p>&copy; 2024 Eğitim Yönetim Platformu-OKTAY SÜTÇÜ</p>
+    </footer>
+
+
 </body>
 </html>

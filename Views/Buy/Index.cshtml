@@ -8,49 +8,45 @@
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <table class="table table-hover table-striped table-bordered">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Id</th>
-                        <th>Kullanıcı No</th>
-                        <th>Kurs No</th>
-                        <th>Kurs</th>
-                        <th>Detay</th>
-                        <th>Güncelle</th>
-                        <th>Sil</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var buy in Model)
-                    {
-                        <tr>
-                            <td>@buy.Id</td>
-                            <td>@buy.StudentId</td>
-                            <td>@buy.CourseId</td>
-                            <td>@buy.Course.CourseName</td>
+        @foreach (var buy in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header text-center text-white" style="background-color:#273e4d;">
+                        <h5>Kurs: @buy.Course.CourseName</h5>
+                    </div>
+                    <img src="@buy.Course.File" class="card-img-top" alt="Kurs Resmi">
+                    <div class="card-body">
+                        <p><strong>Id:</strong> @buy.Id</p>
+                        <p><strong>Kullanıcı No:</strong> @buy.StudentId</p>
+                        <p><strong>Kurs No:</strong> @buy.CourseId</p>
+                        <div class="text-center">
+                            <a href="@Url.Action("Detail", "Course", new { id = buy.CourseId })" class="btn btn-info btn-sm">Detay</a>
+                             @if (User.IsInRole(UserRoles.Role_User))
+                            {
+                                <a href="@Url.Action("Purchase", "Buy", new { id =buy.CourseId })" class="btn btn-primary">Satın Al</a>
+                            }
 
-                            <td align="center" valign="middle">
-                                <a href="@Url.Action("Detail", "Course", new { id = buy.CourseId })" class="btn btn-sm btn-info">Detay</a>
-                            </td>
+                            @if (User.IsInRole(UserRoles.Role_Admin))
+                            {
+                                <button class="btn btn-warning btn-sm" onclick="openUpdateModal('@buy.Id')">Güncelle</button>
+                                <button class="btn btn-danger btn-sm" onclick="openDeleteModal('@buy.Id')">Sil</button>
+                            }
 
-                            <td>
-                                <button class="btn btn-sm btn-warning" onclick="openUpdateModal('@buy.Id')">Güncelle</button>
-                            </td>
-                            <td>
-                                <button class="btn btn-sm btn-danger" onclick="openDeleteModal('@buy.Id')">Sil</button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
+    @if (User.IsInRole(UserRoles.Role_Admin))
+{
     <div class="row pt-3">
         <div class="col text-right">
             <button class="btn btn-lg btn-primary" onclick="openAddModal()">Sepete Ekle</button>
         </div>
     </div>
+}
 </div>
 
 <!-- Add Modal -->
@@ -78,7 +74,6 @@
                         <label for="addStudentId">Kullanıcı No</label>
                         <input type="number" class="form-control" id="addStudentId" name="StudentId" required>
                     </div>
-
                     <button type="submit" class="btn btn-primary">Ekle</button>
                 </form>
             </div>
@@ -112,7 +107,6 @@
                         <label for="updateStudentId">Kullanıcı No</label>
                         <input type="number" class="form-control" id="updateStudentId" name="StudentId" required>
                     </div>
-
                     <button type="submit" class="btn btn-primary">Güncelle</button>
                 </form>
             </div>

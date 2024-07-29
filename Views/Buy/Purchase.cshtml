@@ -1,0 +1,34 @@
+﻿@model PurchaseViewModel
+
+<h2 style="text-align: center; font-family: sans-serif;">Satın Al</h2>
+
+<div style="display: flex; justify-content: center;">
+    <div style="border: 1px solid #ccc; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); max-width: 500px; padding: 20px; font-family: sans-serif;">
+        <div style="text-align: center;">
+            <h3>@Model.CourseName</h3>
+            <img src="@Model.CourseImage" alt="@Model.CourseName" style="max-width: 300px; border-radius: 10px;" />
+            <p>Ücret: @Model.CoursePrice.ToString("C")</p>
+        </div>
+
+        <form asp-action="ConfirmPurchase" method="post">
+            <input type="hidden" name="CourseId" value="@Model.CourseId" />
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label for="CardName">Kart Sahibi</label>
+                <input type="text" class="form-control" id="CardName" name="CardName" required style="border-radius: 5px; padding: 10px;" />
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label for="CardNumber">Kart Numarası</label>
+                <input type="text" class="form-control" id="CardNumber" name="CardNumber" required style="border-radius: 5px; padding: 10px;" />
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label for="CVC">CVC</label>
+                <input type="text" class="form-control" id="CVC" name="CVC" required style="border-radius: 5px; padding: 10px;" />
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label for="ExpirationDate">Son Kullanma Tarihi</label>
+                <input type="text" class="form-control" id="ExpirationDate" name="ExpirationDate" required style="border-radius: 5px; padding: 10px;" />
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; border-radius: 5px; padding: 10px;">Onayla</button>
+        </form>
+    </div>
+</div>

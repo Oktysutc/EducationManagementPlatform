@@ -3,18 +3,22 @@ using EducationManagementPlatform.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace EducationManagementPlatform.Controllers
 {
-    [Authorize(Roles = UserRoles.Role_Admin)]
+    [Authorize(Roles = "Admin,User")]
     public class BuyController : Controller
     {
         private readonly IBuyRepository _buyRepository; // Dependency injection
         private readonly ICourseRepository _courseRepository;
         public readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly ApplicationDbContext _context;
 
-        public BuyController(IBuyRepository buyRepository, ICourseRepository courseRepository, IWebHostEnvironment webHostEnvironment)
+        public BuyController(ApplicationDbContext context,IBuyRepository buyRepository, ICourseRepository courseRepository, IWebHostEnvironment webHostEnvironment)
         {
+            _context = context;
             _buyRepository = buyRepository;
             _courseRepository = courseRepository;
             _webHostEnvironment = webHostEnvironment;
@@ -32,6 +36,63 @@ namespace EducationManagementPlatform.Controllers
             ViewBag.CourseList = CourseList;
             return View(objBuyList);
         }
+
+        public IActionResult Purchase(int id)
+        {
+            var course = _context.Courses
+                .Where(c => c.Id == id)
+                .Select(c => new PurchaseViewModel
+                {
+                    CourseId = c.Id,
+                    CourseName = c.CourseName,
+                    CourseImage = c.File,
+                   
+                })
+                .FirstOrDefault();
+
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            return View(course);
+        }
+
+        [HttpPost]
+        public IActionResult ConfirmPurchase(PurchaseViewModel model)
+        {
+            var purchase = new Purchase
+            {
+                CourseId = model.CourseId,
+                CardName = model.CardName,
+                CardNumber = model.CardNumber,
+                CVC = model.CVC,
+                ExpirationDate = model.ExpirationDate,
+                Price = model.CoursePrice,
+                PurchaseDate = DateTime.Now,
+                UserId = User.Identity.Name // Kullanıcı bilgilerini almak için
+            };
+
+            _context.Purchases.Add(purchase);
+            _context.SaveChanges();
+
+            return RedirectToAction("Sales");
+        }
+
+        public async Task<IActionResult> Sales()
+        {
+            var sales = await _context.Purchases
+                .Include(p => p.Course)  // Include Course related data
+                .Select(p => new SalesViewModel
+                {
+                    
+                    CourseImage = p.Course.File,
+                    Purchaser = p.UserId
+                }).ToListAsync();
+
+            return View(sales);
+        }
+
 
         [Authorize(Roles = "Admin,User")]
         public IActionResult Detail(int id)
@@ -54,7 +115,7 @@ namespace EducationManagementPlatform.Controllers
             }
             return Json(buy);
         }
-
+        
         [HttpPost]
         public IActionResult AddUpdate(Buy buy)
         {
@@ -86,5 +147,6 @@ namespace EducationManagementPlatform.Controllers
             _buyRepository.Save();
             return Json(new { success = true });
         }
+        
     }
 }
